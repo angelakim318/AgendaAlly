@@ -1,0 +1,15 @@
+{
+  "java.jdt.ls.java.home": "/Library/Java/JavaVirtualMachines/amazon-corretto-17.jdk/Contents/Home",
+
+  "java.debug.settings.stepping.skipClasses": [
+
+
+  ],
+  "java.debug.settings.exceptionBreakpoint.skipClasses": [
+
+  ],
+  "cSpell.words": [
+    "Dtos"
+  ],
+  "java.configuration.updateBuildConfiguration": "automatic"
+}
