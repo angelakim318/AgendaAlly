@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 function RegistrationForm() {
   const [userDetails, setUserDetails] = useState({
+    firstName: '',
     username: '',
-    password: '',
-    email: '',
+    password: ''
   });
+  const navigate = useNavigate(); // initialize useNavigate hook
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -15,14 +17,42 @@ function RegistrationForm() {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     console.log(userDetails);
-    // Here you would send userDetails to your backend API
+    const url = 'http://localhost:8080/api/users/register';
+
+    try {
+      const response = await fetch(url, {
+        method: 'POST', 
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(userDetails),
+      });
+
+      if (!response.ok) {
+        throw new Error(`Error: ${response.status}`);
+      }
+
+      const result = await response.json();
+      console.log('Success:', result);
+      navigate('/main'); // redirect user to MainPage
+    } catch (error) {
+      console.error('Error:', error);
+    }
   };
 
   return (
     <form onSubmit={handleSubmit}>
+      <input 
+        type="text" 
+        placeholder="First Name"
+        name="firstName"
+        value={userDetails.firstName} 
+        onChange={handleChange} 
+        required 
+      />
       <input 
         type="text" 
         placeholder="Username" 
@@ -36,14 +66,6 @@ function RegistrationForm() {
         placeholder="Password" 
         name="password" 
         value={userDetails.password} 
-        onChange={handleChange} 
-        required 
-      />
-      <input 
-        type="email" 
-        placeholder="Email" 
-        name="email" 
-        value={userDetails.email} 
         onChange={handleChange} 
         required 
       />
