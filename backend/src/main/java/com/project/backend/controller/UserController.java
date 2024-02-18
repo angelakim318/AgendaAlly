@@ -20,16 +20,6 @@ public class UserController {
     this.userService = userService;
   }
 
-  @GetMapping("/head")
-  String head() {
-    return "head";
-  }
-
-  @GetMapping("/login")
-  String login() {
-    return "login";
-  }
-
   @PostMapping("/register")
   public ResponseEntity<?> registerUser(@RequestBody RegistrationDto registrationDto) {
     User user = userService.registerUser(registrationDto);
