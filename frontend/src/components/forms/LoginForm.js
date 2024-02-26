@@ -6,7 +6,7 @@ function LoginForm() {
     username: '',
     password: '',
   });
-  const navigate = useNavigate(); // initialize useNavigate hook
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -18,31 +18,35 @@ function LoginForm() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(credentials);
-    // Endpoint for authentication
-  const loginUrl = 'http://localhost:8080/api/users/login';
+
+    // Retrieve CSRF token from meta tags
+    const csrfToken = document.querySelector('meta[name="_csrf"]').getAttribute('content');
+    const csrfHeaderName = document.querySelector('meta[name="_csrf_header"]').getAttribute('content');
+    
+    const formBody = new URLSearchParams({
+      username: credentials.username,
+      password: credentials.password,
+    }).toString();
 
     try {
-      // Make a POST request to the login endpoint with credentials
-      const response = await fetch(loginUrl, {
+      const response = await fetch('/login', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json',
+          'Content-Type': 'application/x-www-form-urlencoded',
+          [csrfHeaderName]: csrfToken,
         },
-        body: JSON.stringify(credentials),
+        body: formBody,
+        credentials: 'include', // Necessary for cookies to be sent and received
       });
 
-      // Check if the login was successful
       if (!response.ok) {
         throw new Error(`Login failed: ${response.status}`);
       }
 
-      const userData = await response.json();
-      console.log('Login successful:', userData);
-      navigate('/main'); // redirect user to MainPage
+      // Redirect to main page after successful login
+      navigate('/main'); 
     } catch (error) {
       console.error('Login error:', error);
-      // Handle login errors 
     }
   };
 
