@@ -13,13 +13,18 @@ public class RegistrationDto {
   @Size(min = 8, message = "Password must be at least 8 characters long")
   private String password;
 
+  @NotEmpty(message = "Confirm password")
+  @Size(min = 8, message = "Password must be at least 8 characters long")
+  private String confirmPassword;
+
   // Constructors
   public RegistrationDto() {}
 
-  public RegistrationDto(String firstName, String username, String password) {
+  public RegistrationDto(String firstName, String username, String password, String confirmPassword) {
     this.firstName = firstName;
     this.username = username;
     this.password = password;
+    this.confirmPassword = confirmPassword;
   }
 
   // Getters and Setters
@@ -45,5 +50,13 @@ public class RegistrationDto {
 
   public void setPassword(String password) {
     this.password = password;
+  }
+
+  public String getConfirmPassword() {
+    return password;
+  }
+
+  public void setConfirmPassword(String confirmPassword) {
+    this.confirmPassword = confirmPassword;
   }
 }

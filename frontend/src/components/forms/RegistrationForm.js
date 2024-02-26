@@ -5,9 +5,11 @@ function RegistrationForm() {
   const [userDetails, setUserDetails] = useState({
     firstName: '',
     username: '',
-    password: ''
+    password: '',
+    confirmPassword: ''
   });
-  const navigate = useNavigate(); // initialize useNavigate hook
+  const [error, setError] = useState(""); // For storing registration error message
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -19,32 +21,40 @@ function RegistrationForm() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(userDetails);
+
+    // Check if passwords match
+    if (userDetails.password !== userDetails.confirmPassword) {
+      setError("Passwords do not match.");
+      return;
+    }
+
+    const { confirmPassword, ...userData } = userDetails; // Exclude confirmPassword from userData sent to server
+
     const url = 'http://localhost:8080/api/users/register';
 
     try {
       const response = await fetch(url, {
-        method: 'POST', 
+        method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(userDetails),
+        body: JSON.stringify(userData),
       });
 
       if (!response.ok) {
-        throw new Error(`Error: ${response.status}`);
+        const errorData = await response.json(); // Assuming the server sends back a JSON with error details
+        throw new Error(errorData.message || "Registration failed");
       }
 
-      const result = await response.json();
-      console.log('Success:', result);
-      navigate('/main'); // redirect user to MainPage
+      navigate('/main'); // Redirect to main page after successful registration
     } catch (error) {
-      console.error('Error:', error);
+      setError(error.message); // Update state to show error message
     }
   };
 
   return (
     <form onSubmit={handleSubmit}>
+      {error && <div className="error">{error}</div>}
       <input 
         type="text" 
         placeholder="First Name"
@@ -56,7 +66,7 @@ function RegistrationForm() {
       <input 
         type="text" 
         placeholder="Username" 
-        name="username" 
+        name="username"
         value={userDetails.username} 
         onChange={handleChange} 
         required 
@@ -64,8 +74,16 @@ function RegistrationForm() {
       <input 
         type="password" 
         placeholder="Password" 
-        name="password" 
+        name="password"
         value={userDetails.password} 
+        onChange={handleChange} 
+        required 
+      />
+      <input 
+        type="password" 
+        placeholder="Confirm Password" 
+        name="confirmPassword"
+        value={userDetails.confirmPassword} 
         onChange={handleChange} 
         required 
       />
