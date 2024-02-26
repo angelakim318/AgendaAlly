@@ -18,30 +18,27 @@ function LoginForm() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    // Retrieve CSRF token from meta tags
-    const csrfToken = document.querySelector('meta[name="_csrf"]').getAttribute('content');
-    const csrfHeaderName = document.querySelector('meta[name="_csrf_header"]').getAttribute('content');
-    
-    const formBody = new URLSearchParams({
-      username: credentials.username,
-      password: credentials.password,
-    }).toString();
+    const url = 'http://localhost:8080/login';
 
     try {
-      const response = await fetch('/login', {
+      const response = await fetch(url, { 
         method: 'POST',
         headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
-          [csrfHeaderName]: csrfToken,
+          'Content-Type': 'application/json',
         },
-        body: formBody,
-        credentials: 'include', // Necessary for cookies to be sent and received
+        body: JSON.stringify({
+          username: credentials.username,
+          password: credentials.password,
+        }),
+        credentials: 'include', // cookies if server uses
       });
 
       if (!response.ok) {
         throw new Error(`Login failed: ${response.status}`);
       }
+
+      const data = await response.json(); 
+      console.log('Login successful:', data);
 
       // Redirect to main page after successful login
       navigate('/main'); 
