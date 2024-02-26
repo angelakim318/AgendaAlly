@@ -25,6 +25,9 @@ public class UserService {
       throw new UserAlreadyExistsException("User with username: " + registrationDto.getUsername() + " already exists");
     }
     
+    if (!registrationDto.getPassword().equals(registrationDto.getConfirmPassword())) {
+      throw new IllegalArgumentException("Passwords do not match");
+    }
     User user = new User();
     user.setFirstName(registrationDto.getFirstName());
     user.setUsername(registrationDto.getUsername());

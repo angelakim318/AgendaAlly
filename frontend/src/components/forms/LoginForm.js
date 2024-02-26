@@ -6,6 +6,7 @@ function LoginForm() {
     username: '',
     password: '',
   });
+  const [error, setError] = useState(""); // For storing login error message
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -26,29 +27,24 @@ function LoginForm() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({
-          username: credentials.username,
-          password: credentials.password,
-        }),
-        credentials: 'include', // cookies if server uses
+        body: JSON.stringify(credentials),
+        credentials: 'include', // Necessary for cookies to be sent and received
       });
 
       if (!response.ok) {
-        throw new Error(`Login failed: ${response.status}`);
+        const errorData = await response.json(); 
+        throw new Error(errorData.message || "Login failed");
       }
 
-      const data = await response.json(); 
-      console.log('Login successful:', data);
-
-      // Redirect to main page after successful login
-      navigate('/main'); 
+      navigate('/main'); // Redirect to main page after successful login
     } catch (error) {
-      console.error('Login error:', error);
+      setError(error.message); // Update state to show error message
     }
   };
 
   return (
     <form onSubmit={handleSubmit}>
+      {error && <div className="error">{error}</div>}
       <input 
         type="text" 
         placeholder="Username" 
