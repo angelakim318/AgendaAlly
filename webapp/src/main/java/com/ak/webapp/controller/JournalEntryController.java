@@ -46,21 +46,21 @@ public class JournalEntryController {
             LocalDateTime startOfDay = entryDate.atStartOfDay();
             Optional<JournalEntry> existingEntry = journalEntryRepository.findByUserAndDate(user, startOfDay);
 
+            JournalEntry entryToSave;
             if (existingEntry.isPresent()) {
-                JournalEntry updatedEntry = existingEntry.get();
-                updatedEntry.setContent(journalEntry.getContent());
-                journalEntryRepository.save(updatedEntry);
-                return ResponseEntity.ok(updatedEntry);
+                entryToSave = existingEntry.get();
+                entryToSave.setContent(journalEntry.getContent());
             } else {
-                journalEntry.setUser(user);
-                journalEntry.setDate(startOfDay);
-                JournalEntry savedEntry = journalEntryRepository.save(journalEntry);
-                return ResponseEntity.status(HttpStatus.CREATED).body(savedEntry);
+                entryToSave = new JournalEntry(user, startOfDay, journalEntry.getContent());
             }
+
+            JournalEntry savedEntry = journalEntryRepository.save(entryToSave);
+            return ResponseEntity.ok(savedEntry);
         } else {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
     }
+
 
     @GetMapping("/{date}")
     public ResponseEntity<JournalEntry> getEntry(@PathVariable String date, Authentication authentication) {
