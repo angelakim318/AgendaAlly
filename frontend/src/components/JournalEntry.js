@@ -4,7 +4,7 @@ import axios from 'axios';
 
 const JournalEntry = () => {
   const { date } = useParams();
-  const [id, setId] = useState(null); // Add state for ID
+  const [id, setId] = useState(null);
   const [content, setContent] = useState('');
   const navigate = useNavigate();
 
@@ -13,12 +13,12 @@ const JournalEntry = () => {
       try {
         console.log(`Fetching journal entry for date: ${date}`);
         const response = await axios.get(`http://localhost:8080/api/journal/${date}`, { withCredentials: true });
-        setId(response.data.id); // Store the entry ID
+        setId(response.data.id);
         setContent(response.data.content || '');
       } catch (error) {
         if (error.response && error.response.status === 404) {
           setContent('');
-          setId(null); // Reset ID if no entry found
+          setId(null);
         } else {
           console.error('Error fetching journal entry', error);
         }
@@ -30,7 +30,9 @@ const JournalEntry = () => {
 
   const handleSave = async () => {
     try {
-      await axios.post(`http://localhost:8080/api/journal/${date}`, { content }, { withCredentials: true });
+      const payload = { content };
+      const response = await axios.post(`http://localhost:8080/api/journal/${date}`, payload, { withCredentials: true });
+      setId(response.data.id);
       console.log('Journal entry saved');
     } catch (error) {
       console.error('Error saving journal entry', error);
@@ -41,8 +43,8 @@ const JournalEntry = () => {
     try {
       if (id) {
         await axios.delete(`http://localhost:8080/api/journal/${id}`, { withCredentials: true });
-        setContent(''); // Clear the content on successful delete
-        setId(null); // Reset ID
+        setContent('');
+        setId(null);
         console.log('Journal entry deleted');
       }
     } catch (error) {
