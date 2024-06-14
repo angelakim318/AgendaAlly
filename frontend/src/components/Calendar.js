@@ -35,14 +35,14 @@ const Calendar = () => {
   };
 
   return (
-    <Container>
+    <Container className="calendar-container">
       <div className="calendar-header">
         <h2>{currentDate.toLocaleString('default', { month: 'long' })} {year}</h2>
       </div>
       <div className="calendar-nav-buttons">
-        <button onClick={previousMonth} className="nav-button">Previous</button>
+        <button onClick={previousMonth} className="nav-button">Previous Month</button>
         <button onClick={goToCurrentMonth} className="nav-button current-month-button">Current Month</button>
-        <button onClick={nextMonth} className="nav-button">Next</button>
+        <button onClick={nextMonth} className="nav-button">Next Month</button>
       </div>
       <div className="calendar-grid">
         {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map((day) => (

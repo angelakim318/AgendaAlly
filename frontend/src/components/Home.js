@@ -2,10 +2,15 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import MyCalendar from './Calendar';
 import { useNavigate } from 'react-router-dom';
+import './Home.css';
 
 const Home = ({ user }) => {
   const [firstName, setFirstName] = useState('');
   const navigate = useNavigate();
+
+  const capitalizeFirstLetter = (string) => {
+    return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
+  };
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -13,14 +18,14 @@ const Home = ({ user }) => {
         const response = await axios.get('http://localhost:8080/api/auth/user', {
           withCredentials: true
         });
-        setFirstName(response.data.firstName);
+        setFirstName(capitalizeFirstLetter(response.data.firstName));
       } catch (error) {
         console.error('There was an error fetching the user!', error);
       }
     };
 
     if (user) {
-      setFirstName(user.firstName);
+      setFirstName(capitalizeFirstLetter(user.firstName));
     } else {
       fetchUser();
     }
@@ -38,10 +43,15 @@ const Home = ({ user }) => {
   };
 
   return (
-    <div>
-      <h1>Welcome, {firstName}!</h1>
-      <button onClick={handleLogout}>Logout</button>
-      <MyCalendar />
+    <div className="home-container">
+      <div className="header">
+        <div className="title">AgendaAlly</div>
+        <div className="welcome-message">Welcome, {firstName}!</div>
+        <button onClick={handleLogout} className="logout-button">Logout</button>
+      </div>
+      <div className="calendar-container">
+        <MyCalendar />
+      </div>
     </div>
   );
 };
