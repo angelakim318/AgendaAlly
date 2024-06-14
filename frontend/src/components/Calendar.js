@@ -1,13 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Container } from 'react-bootstrap';
 import './Calendar.css';
 
 const Calendar = () => {
-  const now = new Date();
-  const year = now.getFullYear();
-  const month = now.getMonth();
-  const today = now.getDate();
+  const [currentDate, setCurrentDate] = useState(new Date());
+
+  const year = currentDate.getFullYear();
+  const month = currentDate.getMonth();
+  const today = new Date().getDate();
+  const currentMonth = new Date().getMonth();
+  const currentYear = new Date().getFullYear();
 
   const daysInMonth = new Date(year, month + 1, 0).getDate();
   const firstDayOfMonth = new Date(year, month, 1).getDay();
@@ -19,15 +22,34 @@ const Calendar = () => {
     return day > 0 && day <= daysInMonth ? day : null;
   });
 
+  const nextMonth = () => {
+    setCurrentDate(new Date(year, month + 1, 1));
+  };
+
+  const previousMonth = () => {
+    setCurrentDate(new Date(year, month - 1, 1));
+  };
+
+  const goToCurrentMonth = () => {
+    setCurrentDate(new Date());
+  };
+
   return (
     <Container>
-      <h2>{now.toLocaleString('default', { month: 'long' })} {year}</h2>
+      <div className="calendar-header">
+        <h2>{currentDate.toLocaleString('default', { month: 'long' })} {year}</h2>
+      </div>
+      <div className="calendar-nav-buttons">
+        <button onClick={previousMonth} className="nav-button">Previous</button>
+        <button onClick={goToCurrentMonth} className="nav-button current-month-button">Current Month</button>
+        <button onClick={nextMonth} className="nav-button">Next</button>
+      </div>
       <div className="calendar-grid">
         {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map((day) => (
           <div key={day} className="calendar-header">{day}</div>
         ))}
         {calendarArray.map((day, index) => (
-          <div key={index} className={`calendar-day ${day === today ? 'current-day' : ''}`}>
+          <div key={index} className={`calendar-day ${day === today && month === currentMonth && year === currentYear ? 'current-day' : ''}`}>
             {day ? (
               <>
                 <div className="day-number">{day}</div>

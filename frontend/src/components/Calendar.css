@@ -40,5 +40,29 @@
 }
 
 .current-day {
-  background-color: #f4c8e9; /* Highlight color for the current day */
+  background-color: #f4c8e9; /* Highlight current day */
+}
+
+.nav-button {
+  background-color: #f4c8e9;
+  color: white;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  border-radius: 5px;
+  margin: 5px;
+}
+
+.nav-button:hover {
+  background-color: #d88ec6;
+}
+
+.current-month-button {
+  margin: 10;
+}
+
+.calendar-nav-buttons {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
 }
