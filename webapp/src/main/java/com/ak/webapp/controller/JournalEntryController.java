@@ -44,23 +44,26 @@ public class JournalEntryController {
             User user = userOpt.get();
             LocalDate entryDate = LocalDate.parse(date);
             LocalDateTime startOfDay = entryDate.atStartOfDay();
+
+            // Check for existing entry
             Optional<JournalEntry> existingEntry = journalEntryRepository.findByUserAndDate(user, startOfDay);
 
-            JournalEntry entryToSave;
             if (existingEntry.isPresent()) {
-                entryToSave = existingEntry.get();
-                entryToSave.setContent(journalEntry.getContent());
+                // Update existing entry
+                JournalEntry entryToUpdate = existingEntry.get();
+                entryToUpdate.setContent(journalEntry.getContent());
+                JournalEntry updatedEntry = journalEntryRepository.save(entryToUpdate);
+                return ResponseEntity.ok(updatedEntry);
             } else {
-                entryToSave = new JournalEntry(user, startOfDay, journalEntry.getContent());
+                // Create a new entry
+                JournalEntry newEntry = new JournalEntry(user, startOfDay, journalEntry.getContent());
+                JournalEntry savedEntry = journalEntryRepository.save(newEntry);
+                return ResponseEntity.ok(savedEntry);
             }
-
-            JournalEntry savedEntry = journalEntryRepository.save(entryToSave);
-            return ResponseEntity.ok(savedEntry);
         } else {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
     }
-
 
     @GetMapping("/{date}")
     public ResponseEntity<JournalEntry> getEntry(@PathVariable String date, Authentication authentication) {
@@ -81,8 +84,6 @@ public class JournalEntryController {
         return journalEntry.map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
     }
-
-
 
     @PutMapping("/{id}")
     public ResponseEntity<JournalEntry> updateEntry(@PathVariable Long id, @RequestBody JournalEntry updatedEntry, Authentication authentication) {
