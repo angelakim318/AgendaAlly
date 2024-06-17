@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './JournalEntry.css';
+import { capitalizeFirstLetter } from '../utils/capitalize';
 
 const JournalEntry = ({ user }) => {
   const { date } = useParams();
@@ -61,7 +62,7 @@ const JournalEntry = ({ user }) => {
     <div className="journal-container">
       <div className="header">
         <div className="title">AgendaAlly</div>
-        <div className="welcome-message">Welcome, {user && user.firstName}!</div>
+        <div className="welcome-message">Welcome, {capitalizeFirstLetter(user.firstName)}!</div>
         <button onClick={() => navigate('/')} className="logout-button">Logout</button>
       </div>
       <h1 className="journal-title">Journal Entry for {formattedDate}</h1>
