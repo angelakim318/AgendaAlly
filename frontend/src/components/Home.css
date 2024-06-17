@@ -2,6 +2,11 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 100%;
+  max-width: 1200px; /* Match the width of the calendar and journal pages */
+  margin: 40px auto; /* Add margin to create space at the top and bottom */
+  padding: 0 20px;
+  box-sizing: border-box;
 }
 
 .header {
@@ -10,9 +15,11 @@
   align-items: center;
   width: 100%;
   padding: 20px;
-  box-sizing: border-box;
   background-color: #f5f5f5;
   border-bottom: 1px solid #ddd;
+  border: 1px solid #ddd;
+  max-width: 1200px; /* Match the width of the calendar and journal pages */
+  margin-bottom: 20px;
 }
 
 .title {
@@ -42,4 +49,6 @@
   display: flex;
   justify-content: center;
   margin-top: 20px;
+  max-width: 1200px; /* Match the width of the journal page */
+  margin-bottom: 40px; /* Add margin to create space at the bottom */
 }

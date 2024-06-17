@@ -1,8 +1,12 @@
 .journal-container {
+  width: 100%;
+  max-width: 1200px; /* Match the width of the home header and calendar */
+  margin: 40px auto; /* Add margin to create space at the top and bottom */
+  padding: 0 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 20px;
+  box-sizing: border-box;
 }
 
 .header {
@@ -11,9 +15,11 @@
   align-items: center;
   width: 100%;
   padding: 20px;
-  box-sizing: border-box;
   background-color: #f5f5f5;
   border-bottom: 1px solid #ddd;
+  border: 1px solid #ddd;
+  max-width: 1200px; /* Match the width of the home header and calendar */
+  margin-bottom: 20px;
 }
 
 .title {
@@ -39,12 +45,23 @@
 }
 
 .journal-title {
+  font-weight: bold;
   text-align: center;
-  margin: 20px 0;
+  padding: 10px;
+  border: 1px solid #ddd;
+  background-color: #f5f5f5;
+  width: 100%;
+  max-width: 1200px; /* Match the width of the home header and calendar */
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
 }
 
 .journal-textarea {
   width: 100%;
+  max-width: 1200px; /* Match the width of the home header and calendar */
   height: 300px;
   padding: 10px;
   font-size: 16px;
@@ -52,7 +69,7 @@
   border-radius: 5px;
   box-sizing: border-box;
   margin-bottom: 20px;
-  resize: none; 
+  resize: none; /* Disable resizing */
 }
 
 .journal-buttons {
@@ -60,6 +77,7 @@
   justify-content: center;
   gap: 10px;
   width: 100%;
+  max-width: 1200px; /* Match the width of the home header and calendar */
 }
 
 .save-button, .delete-button, .back-button {
