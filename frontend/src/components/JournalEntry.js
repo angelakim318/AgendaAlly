@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import './JournalEntry.css';
 
-const JournalEntry = () => {
+const JournalEntry = ({ user }) => {
   const { date } = useParams();
   const [id, setId] = useState(null);
   const [content, setContent] = useState('');
@@ -11,7 +12,6 @@ const JournalEntry = () => {
   useEffect(() => {
     const fetchEntry = async () => {
       try {
-        console.log(`Fetching journal entry for date: ${date}`);
         const response = await axios.get(`http://localhost:8080/api/journal/${date}`, { withCredentials: true });
         setId(response.data.id);
         setContent(response.data.content || '');
@@ -33,7 +33,6 @@ const JournalEntry = () => {
       const payload = { content };
       const response = await axios.post(`http://localhost:8080/api/journal/${date}`, payload, { withCredentials: true });
       setId(response.data.id);
-      console.log('Journal entry saved');
     } catch (error) {
       console.error('Error saving journal entry', error);
     }
@@ -45,7 +44,6 @@ const JournalEntry = () => {
         await axios.delete(`http://localhost:8080/api/journal/${id}`, { withCredentials: true });
         setContent('');
         setId(null);
-        console.log('Journal entry deleted');
       }
     } catch (error) {
       console.error('Error deleting journal entry', error);
@@ -60,16 +58,24 @@ const JournalEntry = () => {
   });
 
   return (
-    <div>
-      <h1>Journal Entry for {formattedDate}</h1>
+    <div className="journal-container">
+      <div className="header">
+        <div className="title">AgendaAlly</div>
+        <div className="welcome-message">Welcome, {user && user.firstName}!</div>
+        <button onClick={() => navigate('/')} className="logout-button">Logout</button>
+      </div>
+      <h1 className="journal-title">Journal Entry for {formattedDate}</h1>
       <textarea
+        className="journal-textarea"
         value={content}
         placeholder="Start writing your journal entry here..."
         onChange={(e) => setContent(e.target.value)}
       />
-      <button onClick={handleSave}>Save</button>
-      <button onClick={handleDelete} disabled={!id}>Delete</button>
-      <button onClick={() => navigate('/home')}>Back to Calendar</button>
+      <div className="journal-buttons">
+        <button onClick={handleSave} className="save-button">Save</button>
+        <button onClick={handleDelete} className="delete-button" disabled={!id}>Delete</button>
+      </div>
+      <button onClick={() => navigate('/home')} className="back-button">Back to Calendar</button>
     </div>
   );
 };
