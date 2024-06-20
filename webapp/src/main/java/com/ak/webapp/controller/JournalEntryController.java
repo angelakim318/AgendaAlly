@@ -2,8 +2,8 @@ package com.ak.webapp.controller;
 
 import com.ak.webapp.model.JournalEntry;
 import com.ak.webapp.model.User;
-import com.ak.webapp.repository.JournalEntryRepository;
 import com.ak.webapp.repository.UserRepository;
+import com.ak.webapp.service.JournalEntryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,13 +24,12 @@ import org.slf4j.LoggerFactory;
 public class JournalEntryController {
 
     @Autowired
-    private JournalEntryRepository journalEntryRepository;
+    private JournalEntryService journalEntryService;
 
     @Autowired
     private UserRepository userRepository;
 
     private static final Logger logger = LoggerFactory.getLogger(JournalEntryController.class);
-
 
     @PostMapping("/{date}")
     public ResponseEntity<JournalEntry> createEntry(@PathVariable String date, @RequestBody JournalEntry journalEntry, Authentication authentication) {
@@ -45,19 +46,16 @@ public class JournalEntryController {
             LocalDate entryDate = LocalDate.parse(date);
             LocalDateTime startOfDay = entryDate.atStartOfDay();
 
-            // Check for existing entry
-            Optional<JournalEntry> existingEntry = journalEntryRepository.findByUserAndDate(user, startOfDay);
+            Optional<JournalEntry> existingEntry = journalEntryService.findByUserAndDate(user, startOfDay);
 
             if (existingEntry.isPresent()) {
-                // Update existing entry
                 JournalEntry entryToUpdate = existingEntry.get();
                 entryToUpdate.setContent(journalEntry.getContent());
-                JournalEntry updatedEntry = journalEntryRepository.save(entryToUpdate);
+                JournalEntry updatedEntry = journalEntryService.save(entryToUpdate);
                 return ResponseEntity.ok(updatedEntry);
             } else {
-                // Create a new entry
                 JournalEntry newEntry = new JournalEntry(user, startOfDay, journalEntry.getContent());
-                JournalEntry savedEntry = journalEntryRepository.save(newEntry);
+                JournalEntry savedEntry = journalEntryService.save(newEntry);
                 return ResponseEntity.ok(savedEntry);
             }
         } else {
@@ -66,7 +64,7 @@ public class JournalEntryController {
     }
 
     @GetMapping("/{date}")
-    public ResponseEntity<JournalEntry> getEntry(@PathVariable String date, Authentication authentication) {
+    public ResponseEntity<?> getEntry(@PathVariable String date, Authentication authentication) {
         if (authentication == null || !authentication.isAuthenticated()) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
@@ -76,13 +74,18 @@ public class JournalEntryController {
 
         LocalDate entryDate = LocalDate.parse(date);
         LocalDateTime startOfDay = entryDate.atStartOfDay();
-        System.out.println("Fetching entry for date: " + startOfDay);
+        logger.debug("Fetching entry for date: " + startOfDay);
 
-        Optional<JournalEntry> journalEntry = journalEntryRepository.findByUsernameAndDate(username, startOfDay);
-        journalEntry.ifPresent(entry -> System.out.println("Found journal entry: " + entry));
+        Optional<JournalEntry> journalEntry = journalEntryService.findByUsernameAndDate(username, startOfDay);
+        journalEntry.ifPresent(entry -> logger.debug("Found journal entry: " + entry));
 
-        return journalEntry.map(ResponseEntity::ok)
-                .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
+        if (journalEntry.isPresent()) {
+            return ResponseEntity.ok(journalEntry.get());
+        } else {
+            Map<String, String> response = new HashMap<>();
+            response.put("message", "No journal entry found for the given date");
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(response);
+        }
     }
 
     @PutMapping("/{id}")
@@ -92,11 +95,11 @@ public class JournalEntryController {
         }
 
         String username = authentication.getName();
-        Optional<JournalEntry> journalEntry = journalEntryRepository.findByIdAndUserUsername(id, username);
+        Optional<JournalEntry> journalEntry = journalEntryService.findByIdAndUserUsername(id, username);
         if (journalEntry.isPresent()) {
             JournalEntry existingEntry = journalEntry.get();
             existingEntry.setContent(updatedEntry.getContent());
-            journalEntryRepository.save(existingEntry);
+            journalEntryService.save(existingEntry);
             return ResponseEntity.ok(existingEntry);
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
@@ -110,9 +113,9 @@ public class JournalEntryController {
         }
 
         String username = authentication.getName();
-        Optional<JournalEntry> journalEntry = journalEntryRepository.findByIdAndUserUsername(id, username);
+        Optional<JournalEntry> journalEntry = journalEntryService.findByIdAndUserUsername(id, username);
         if (journalEntry.isPresent()) {
-            journalEntryRepository.delete(journalEntry.get());
+            journalEntryService.delete(journalEntry.get());
             return ResponseEntity.ok().build();
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
