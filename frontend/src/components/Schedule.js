@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './Schedule.css';
-import { capitalizeFirstLetter } from '../utils/capitalize';
 
 const Schedule = ({ user }) => {
   const { date } = useParams();
@@ -57,6 +56,12 @@ const Schedule = ({ user }) => {
     day: 'numeric'
   });
 
+  const formatTime = (hour) => {
+    const period = hour < 12 ? 'AM' : 'PM';
+    const formattedHour = hour % 12 === 0 ? 12 : hour % 12;
+    return `${formattedHour}:00 ${period}`;
+  };
+
   return (
     <div className="schedule-container">
       <div className="header">
@@ -68,7 +73,7 @@ const Schedule = ({ user }) => {
       <div className="schedule-grid">
         {[...Array(24).keys()].map(hour => (
           <div key={hour} className="schedule-row">
-            <div className="schedule-time">{`${hour.toString().padStart(2, '0')}:00`}</div>
+            <div className="schedule-time">{formatTime(hour)}</div>
             <div
               className="schedule-task"
               onClick={() => setSelectedTask({
