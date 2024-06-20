@@ -4,7 +4,7 @@
   align-items: center;
   width: 100%;
   max-width: 1200px; /* Match the width of the calendar and journal pages */
-  margin: 40px auto; /* Add margin to create space at the top and bottom */
+  margin: 20px auto; /* Add margin to create space at the top and bottom */
   padding: 0 20px;
   box-sizing: border-box;
 }
