@@ -1,7 +1,7 @@
 .calendar-container {
   width: 100%;
-  max-width: 1200px; 
-  margin: 0 auto; 
+  max-width: 1200px;
+  margin: 0 auto;
   padding: 0;
   display: flex;
   flex-direction: column;
@@ -9,38 +9,51 @@
   box-sizing: border-box;
 }
 
+.calendar-title {
+  text-align: center;
+  border: 1px solid #ddd;
+  background-color: #f5f5f5;
+  width: 100%;
+  max-width: 1000px;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 10px; /* Add bottom margin here */
+}
+
 .calendar-header {
   text-align: center;
   border: 1px solid #ddd;
   background-color: #f5f5f5;
   width: 100%;
-  max-width: 1000px; /* Match the width of the calendar */
+  max-width: 1000px;
   box-sizing: border-box;
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-bottom: 0;
 }
 
 .calendar-nav-buttons {
   display: flex;
   justify-content: center;
   width: 100%;
-  max-width: 1000px; /* Match the width of the calendar */
+  max-width: 1000px;
   margin-bottom: 10px;
-  margin-top: 30px;
+  margin-top: 20px;
 }
 
 .calendar-grid {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
   gap: 5px;
-  max-width: 1000px; /* Match the width of the calendar */
+  max-width: 1000px;
   width: 100%;
   box-sizing: border-box;
 }
 
-.calendar-day,
-.calendar-header {
+.calendar-day {
   text-align: center;
   padding: 20px;
   border: 1px solid #ddd;
@@ -62,7 +75,7 @@
 
 .journal-link:hover,
 .schedule-link:hover {
-  text-decoration: underline;
+  font-weight: bold;
 }
 
 .empty-day {

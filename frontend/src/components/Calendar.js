@@ -1,11 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { Container } from 'react-bootstrap';
 import './styles/Calendar.css';
 
-const Calendar = () => {
-  const [currentDate, setCurrentDate] = useState(new Date());
-
+const Calendar = ({ currentDate }) => {
   const year = currentDate.getFullYear();
   const month = currentDate.getMonth();
   const today = new Date().getDate();
@@ -22,27 +20,10 @@ const Calendar = () => {
     return day > 0 && day <= daysInMonth ? day : null;
   });
 
-  const nextMonth = () => {
-    setCurrentDate(new Date(year, month + 1, 1));
-  };
-
-  const previousMonth = () => {
-    setCurrentDate(new Date(year, month - 1, 1));
-  };
-
-  const goToCurrentMonth = () => {
-    setCurrentDate(new Date());
-  };
-
   return (
     <Container className="calendar-container">
-      <div className="calendar-header">
+      <div className="calendar-title">
         <h2>{currentDate.toLocaleString('default', { month: 'long' })} {year}</h2>
-      </div>
-      <div className="calendar-nav-buttons">
-        <button onClick={previousMonth} className="nav-button">Previous Month</button>
-        <button onClick={goToCurrentMonth} className="nav-button current-month-button">Current Month</button>
-        <button onClick={nextMonth} className="nav-button">Next Month</button>
       </div>
       <div className="calendar-grid">
         {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map((day) => (
