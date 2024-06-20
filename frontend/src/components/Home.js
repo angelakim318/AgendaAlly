@@ -43,7 +43,7 @@ const Home = ({ user }) => {
     <div className="home-container">
       <div className="header">
         <div className="title">AgendaAlly</div>
-        <div className="welcome-message">Welcome, {firstName}!</div>
+        <div className="welcome-message">Hi {firstName}!</div>
         <button onClick={handleLogout} className="logout-button">Logout</button>
       </div>
       <div className="calendar-container">
