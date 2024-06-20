@@ -90,3 +90,14 @@
   width: 100%;
   box-sizing: border-box;
 }
+
+.schedule-link {
+  display: block;
+  text-decoration: none;
+  color: #df2baf;
+  margin-top: 5px;
+}
+
+.schedule-link:hover {
+  text-decoration: underline;
+}

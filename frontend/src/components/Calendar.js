@@ -56,6 +56,9 @@ const Calendar = () => {
                 <Link to={`/journal/${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`} className="journal-link">
                   Journal
                 </Link>
+                <Link to={`/schedule/${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`} className="schedule-link">
+                  Schedule
+                </Link>
               </>
             ) : (
               <div className="empty-day"></div>

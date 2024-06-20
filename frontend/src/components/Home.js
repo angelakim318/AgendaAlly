@@ -9,10 +9,6 @@ const Home = ({ user }) => {
   const [firstName, setFirstName] = useState('');
   const navigate = useNavigate();
 
-  const capitalizeFirstLetter = (string) => {
-    return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
-  };
-
   useEffect(() => {
     const fetchUser = async () => {
       try {
