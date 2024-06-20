@@ -7,7 +7,9 @@ import { capitalizeFirstLetter } from '../utils/capitalize';
 
 const Home = ({ user }) => {
   const [firstName, setFirstName] = useState('');
+  const [currentDate, setCurrentDate] = useState(new Date());
   const navigate = useNavigate();
+  const wavingHandEmoji = '\u{1F44B}';
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -39,6 +41,18 @@ const Home = ({ user }) => {
     }
   };
 
+  const goToPreviousMonth = () => {
+    setCurrentDate(new Date(currentDate.setMonth(currentDate.getMonth() - 1)));
+  };
+
+  const goToCurrentMonth = () => {
+    setCurrentDate(new Date());
+  };
+
+  const goToNextMonth = () => {
+    setCurrentDate(new Date(currentDate.setMonth(currentDate.getMonth() + 1)));
+  };
+
   return (
     <div className="home-container">
       <div className="header">
@@ -46,10 +60,15 @@ const Home = ({ user }) => {
         <button onClick={handleLogout} className="logout-button">Logout</button>
       </div>
       <div className="welcome-message">
-        Welcome, {firstName}!
+        Welcome, {firstName} {wavingHandEmoji}
+      </div>
+      <div className="calendar-nav-buttons">
+        <button onClick={goToPreviousMonth} className="nav-button">Previous Month</button>
+        <button onClick={goToCurrentMonth} className="nav-button current-month-button">Current Month</button>
+        <button onClick={goToNextMonth} className="nav-button">Next Month</button>
       </div>
       <div className="calendar-container">
-        <MyCalendar />
+        <MyCalendar currentDate={currentDate} />
       </div>
     </div>
   );

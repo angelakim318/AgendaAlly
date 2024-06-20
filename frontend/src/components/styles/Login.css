@@ -51,6 +51,7 @@
   margin: 10px 0;
   border: 1px solid #ddd;
   border-radius: 5px;
+  font-size: 13px;
   box-sizing: border-box;
 }
 
@@ -62,6 +63,7 @@
   cursor: pointer;
   border-radius: 5px;
   margin-top: 20px;
+  font-size: 13px;
 }
 
 .login-container button:hover {

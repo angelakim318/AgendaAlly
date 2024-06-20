@@ -86,7 +86,7 @@ const Schedule = ({ user }) => {
   return (
     <div className="schedule-container">
       <div className="header">
-        <div className="title">AgendaAlly</div>
+        <div className="header-title">AgendaAlly</div>
         <div className="header-buttons">
           <button onClick={() => navigate('/home')} className="back-button">Back to Calendar</button>
           <button onClick={() => navigate('/')} className="logout-button">Logout</button>
