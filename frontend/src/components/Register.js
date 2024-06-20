@@ -8,6 +8,7 @@ const Register = () => {
   const [password, setPassword] = useState('');
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
+  const [error, setError] = useState(''); // State for error message
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -22,8 +23,8 @@ const Register = () => {
       console.log('User registered successfully', response.data);
       navigate('/login'); 
     } catch (error) {
+      setError('Registration failed. Please try again.'); // Set error message
       console.error('There was an error registering the user!', error);
-      alert('Registration failed');
     }
   };
 
@@ -34,6 +35,7 @@ const Register = () => {
       </div>
       <div className="register-container">
         <h2>Register</h2>
+        {error && <p className="error-message">{error}</p>} {/* Display error message */}
         <form onSubmit={handleSubmit}>
           <div>
             <label>First Name</label>
