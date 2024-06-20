@@ -50,6 +50,7 @@
 
 .logout-button:hover, .back-button:hover {
   background-color: #d88ec6;
+  font-weight: bold;
 }
 
 .journal-entry-container {
@@ -109,4 +110,5 @@
 
 .save-button:hover, .delete-button:hover {
   background-color: #d88ec6;
+  font-weight: bold;
 }

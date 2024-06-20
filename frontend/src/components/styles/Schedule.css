@@ -48,6 +48,7 @@
 
 .logout-button:hover, .back-button:hover {
   background-color: #d88ec6;
+  font-weight: bold;
 }
 
 .content {
@@ -148,4 +149,26 @@
 
 .save-button:hover, .delete-button:hover, .close-button:hover {
   background-color: #d88ec6;
+  font-weight: bold;
+}
+
+.save-button:disabled,
+.delete-button:disabled,
+.close-button:disabled,
+.logout-button:disabled,
+.back-button:disabled {
+  background-color: #ccc; /* Grey background */
+  color: #777; /* Light grey text */
+  cursor: not-allowed; /* Not-allowed cursor */
+  font-weight: normal; /* Normal font-weight */
+}
+
+.save-button:not(:disabled):hover,
+.delete-button:not(:disabled):hover,
+.close-button:not(:disabled):hover,
+.logout-button:not(:disabled):hover,
+.back-button:not(:disabled):hover {
+  background-color: #d88ec6;
+  font-weight: bold;
+  cursor: pointer;
 }
