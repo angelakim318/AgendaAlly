@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
+import './Register.css';
 
 const Register = () => {
   const [username, setUsername] = useState('');
@@ -27,27 +28,35 @@ const Register = () => {
   };
 
   return (
-    <div>
-      <h2>Register</h2>
-      <form onSubmit={handleSubmit}>
-      <div>
-          <label>First Name</label>
-          <input type="text" value={firstName} onChange={(e) => setFirstName(e.target.value)} />
+    <div className="register-page">
+      <div className="header">
+        <div className="title">AgendaAlly</div>
+      </div>
+      <div className="register-container">
+        <h2>Register</h2>
+        <form onSubmit={handleSubmit}>
+          <div>
+            <label>First Name</label>
+            <input type="text" value={firstName} onChange={(e) => setFirstName(e.target.value)} />
+          </div>
+          <div>
+            <label>Last Name</label>
+            <input type="text" value={lastName} onChange={(e) => setLastName(e.target.value)} />
+          </div>
+          <div>
+            <label>Username</label>
+            <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} />
+          </div>
+          <div>
+            <label>Password</label>
+            <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+          </div>
+          <button type="submit">Register</button>
+        </form>
+        <div className="login-link">
+          <p>Already have an account? <Link to="/login">Login here</Link></p>
         </div>
-        <div>
-          <label>Last Name</label>
-          <input type="text" value={lastName} onChange={(e) => setLastName(e.target.value)} />
-        </div>
-        <div>
-          <label>Username</label>
-          <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} />
-        </div>
-        <div>
-          <label>Password</label>
-          <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
-        </div>
-        <button type="submit">Register</button>
-      </form>
+      </div>
     </div>
   );
 };
