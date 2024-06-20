@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
 import './Login.css';
 
@@ -53,6 +53,9 @@ const Login = ({ setUser }) => {
           onChange={(e) => setPassword(e.target.value)}
         />
         <button onClick={handleLogin}>Login</button>
+        <div className="register-link">
+          <p>Don't have an account? <Link to="/register">Register here</Link></p>
+        </div>
       </div>
     </div>
   );
