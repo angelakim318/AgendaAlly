@@ -1,4 +1,4 @@
-package com.ak.webapp.respository;
+package com.ak.webapp.repository;
 
 import com.ak.webapp.model.JournalEntry;
 import com.ak.webapp.model.User;

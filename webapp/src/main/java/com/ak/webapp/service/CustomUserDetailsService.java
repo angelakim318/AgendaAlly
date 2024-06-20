@@ -1,7 +1,7 @@
 package com.ak.webapp.service;
 
 import com.ak.webapp.model.User;
-import com.ak.webapp.respository.UserRepository;
+import com.ak.webapp.repository.UserRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
