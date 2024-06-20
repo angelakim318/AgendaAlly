@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import './Schedule.css';
+import './styles/Schedule.css';
 import { capitalizeFirstLetter } from '../utils/capitalize';
 
 const Schedule = ({ user }) => {

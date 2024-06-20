@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import MyCalendar from './Calendar';
 import { useNavigate } from 'react-router-dom';
-import './Home.css';
+import './styles/Home.css';
 import { capitalizeFirstLetter } from '../utils/capitalize';
 
 const Home = ({ user }) => {
