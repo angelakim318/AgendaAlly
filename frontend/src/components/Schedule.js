@@ -9,16 +9,17 @@ const Schedule = ({ user }) => {
   const [selectedTask, setSelectedTask] = useState({ id: null, content: '', time: '' });
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const fetchTasks = async () => {
-      try {
-        const response = await axios.get(`http://localhost:8080/api/schedule/${date}`, { withCredentials: true });
-        setTasks(response.data);
-      } catch (error) {
-        console.error('Error fetching schedule tasks', error);
-      }
-    };
+  const fetchTasks = async () => {
+    try {
+      const response = await axios.get(`http://localhost:8080/api/schedule/${date}`, { withCredentials: true });
+      setTasks(response.data);
+      console.log('Fetched tasks:', response.data); // Debug statement
+    } catch (error) {
+      console.error('Error fetching schedule tasks', error);
+    }
+  };
 
+  useEffect(() => {
     fetchTasks();
   }, [date]);
 
@@ -28,9 +29,15 @@ const Schedule = ({ user }) => {
 
   const handleSave = async () => {
     try {
-      const payload = { task: selectedTask.content };
-      await axios.post(`http://localhost:8080/api/schedule/${date}/${selectedTask.time}`, payload, { withCredentials: true });
-      setTasks(tasks.map(task => (task.time === selectedTask.time ? { ...task, task: selectedTask.content } : task)));
+      const response = await axios.post(`http://localhost:8080/api/schedule/${date}/${selectedTask.time}`, selectedTask.content, {
+        headers: {
+          'Content-Type': 'text/plain'
+        },
+        withCredentials: true
+      });
+      const updatedTask = response.data;
+      console.log('Saved task:', updatedTask); // Debug statement
+      await fetchTasks(); // Fetch tasks again after saving
       setSelectedTask({ id: null, content: '', time: '' });
     } catch (error) {
       console.error('Error saving schedule task', error);
@@ -41,12 +48,16 @@ const Schedule = ({ user }) => {
     try {
       if (selectedTask.id) {
         await axios.delete(`http://localhost:8080/api/schedule/${selectedTask.id}`, { withCredentials: true });
-        setTasks(tasks.filter(task => task.id !== selectedTask.id));
+        await fetchTasks(); // Fetch tasks again after deleting
         setSelectedTask({ id: null, content: '', time: '' });
       }
     } catch (error) {
       console.error('Error deleting schedule task', error);
     }
+  };
+
+  const handleClose = () => {
+    setSelectedTask({ id: null, content: '', time: '' });
   };
 
   const formattedDate = new Date(date + 'T00:00:00').toLocaleDateString('en-US', {
@@ -71,31 +82,37 @@ const Schedule = ({ user }) => {
       </div>
       <h1 className="schedule-title">Schedule for {formattedDate}</h1>
       <div className="schedule-grid">
-        {[...Array(24).keys()].map(hour => (
-          <div key={hour} className="schedule-row">
-            <div className="schedule-time">{formatTime(hour)}</div>
-            <div
-              className="schedule-task"
-              onClick={() => setSelectedTask({
-                id: tasks.find(task => task.time === `${hour.toString().padStart(2, '0')}:00`)?.id || null,
-                time: `${hour.toString().padStart(2, '0')}:00`,
-                content: tasks.find(task => task.time === `${hour.toString().padStart(2, '0')}:00`)?.task || ''
-              })}
-            >
-              {tasks.find(task => task.time === `${hour.toString().padStart(2, '0')}:00`)?.task || ''}
+        {[...Array(24).keys()].map(hour => {
+          const task = tasks.find(task => task.time === `${hour.toString().padStart(2, '0')}:00:00`);
+          // console.log(`Hour ${hour}: Task`, task); // Debug statement
+          return (
+            <div key={hour} className="schedule-row">
+              <div className="schedule-time">{formatTime(hour)}</div>
+              <div
+                className="schedule-task"
+                onClick={() => setSelectedTask({
+                  id: task?.id || null,
+                  time: `${hour.toString().padStart(2, '0')}:00:00`,
+                  content: task?.task || ''
+                })}
+              >
+                {task?.task || ''}
+              </div>
             </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
       {selectedTask.time && (
         <div className="task-modal">
           <textarea
             value={selectedTask.content}
             onChange={(e) => handleTaskChange(selectedTask.time, e.target.value)}
+            className="task-textarea"
           />
           <div className="modal-buttons">
             <button onClick={handleSave} className="save-button">Save</button>
             <button onClick={handleDelete} className="delete-button" disabled={!selectedTask.id}>Delete</button>
+            <button onClick={handleClose} className="close-button">Close</button>
           </div>
         </div>
       )}
