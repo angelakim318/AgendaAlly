@@ -16,18 +16,36 @@
   border: 1px solid #ddd;
   background-color: #f5f5f5;
   width: 100%;
-  max-width: 1200px; /* Match the width of the journal page */
+  max-width: 1000px; /* Match the width of the calendar */
   box-sizing: border-box;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.calendar-day {
+.calendar-nav-buttons {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  max-width: 1000px; /* Match the width of the calendar */
+  margin-bottom: 10px;
+  margin-top: 30px;
+}
+
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 5px;
+  max-width: 1000px; /* Match the width of the calendar */
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.calendar-day,
+.calendar-header {
   text-align: center;
   padding: 20px;
   border: 1px solid #ddd;
-  position: relative;
   box-sizing: border-box;
 }
 
@@ -37,13 +55,15 @@
   margin-bottom: 10px;
 }
 
-.journal-link {
+.journal-link,
+.schedule-link {
   display: block;
   text-decoration: none;
   color: #e361c0;
 }
 
-.journal-link:hover {
+.journal-link:hover,
+.schedule-link:hover {
   text-decoration: underline;
 }
 
@@ -71,33 +91,4 @@
 
 .current-month-button {
   margin: 0;
-}
-
-.calendar-nav-buttons {
-  display: flex;
-  justify-content: center;
-  width: 100%;
-  max-width: 1200px; /* Match the width of the journal page */
-  margin-bottom: 10px;
-  margin-top: 30px;
-}
-
-.calendar-grid {
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  gap: 5px;
-  max-width: 1200px; /* Match the width of the journal page */
-  width: 100%;
-  box-sizing: border-box;
-}
-
-.schedule-link {
-  display: block;
-  text-decoration: none;
-  color: #df2baf;
-  margin-top: 5px;
-}
-
-.schedule-link:hover {
-  text-decoration: underline;
 }
