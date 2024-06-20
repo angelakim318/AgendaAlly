@@ -42,9 +42,11 @@ const Home = ({ user }) => {
   return (
     <div className="home-container">
       <div className="header">
-        <div className="title">AgendaAlly</div>
-        <div className="welcome-message">Hi {firstName}!</div>
+        <div className="app-title">AgendaAlly</div>
         <button onClick={handleLogout} className="logout-button">Logout</button>
+      </div>
+      <div className="welcome-message">
+        Welcome, {firstName}!
       </div>
       <div className="calendar-container">
         <MyCalendar />
