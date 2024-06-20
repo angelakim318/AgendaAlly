@@ -6,6 +6,7 @@ import './Login.css';
 const Login = ({ setUser }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [error, setError] = useState(''); // State for error message
   const navigate = useNavigate();
 
   const handleLogin = async () => {
@@ -28,7 +29,7 @@ const Login = ({ setUser }) => {
       setUser(userResponse.data);
       navigate('/home');
     } catch (error) {
-      alert('Login failed!');
+      setError('Login failed. Please try again.'); // Set error message
       console.error('There was an error logging in!', error);
     }
   };
@@ -40,6 +41,7 @@ const Login = ({ setUser }) => {
       </div>
       <div className="login-container">
         <h2>Login</h2>
+        {error && <p className="error-message">{error}</p>} {/* Conditionally render error message */}
         <input
           type="text"
           placeholder="Username"
