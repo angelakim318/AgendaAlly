@@ -88,13 +88,15 @@ const Schedule = ({ user }) => {
       <div className="header">
         <div className="title">AgendaAlly</div>
         <div className="welcome-message">Welcome, {user ? capitalizeFirstLetter(user.firstName) : ''}!</div>
-        <button onClick={() => navigate('/')} className="logout-button">Logout</button>
+        <div className="header-buttons">
+          <button onClick={() => navigate('/home')} className="back-button">Back to Calendar</button>
+          <button onClick={() => navigate('/')} className="logout-button">Logout</button>
+        </div>
       </div>
       <h1 className="schedule-title">Schedule for {formattedDate}</h1>
       <div className="schedule-grid">
         {[...Array(24).keys()].map(hour => {
           const task = tasks.find(task => task.time === `${hour.toString().padStart(2, '0')}:00:00`);
-          // console.log(`Hour ${hour}: Task`, task);
           return (
             <div key={hour} className="schedule-row">
               <div className="schedule-time">{formatTime(hour)}</div>
@@ -130,7 +132,6 @@ const Schedule = ({ user }) => {
           </div>
         </div>
       )}
-      <button onClick={() => navigate('/home')} className="back-button">Back to Calendar</button>
     </div>
   );
 };

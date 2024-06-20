@@ -62,21 +62,24 @@ const JournalEntry = ({ user }) => {
     <div className="journal-container">
       <div className="header">
         <div className="title">AgendaAlly</div>
-        <div className="welcome-message">Welcome, {capitalizeFirstLetter(user.firstName)}!</div>
-        <button onClick={() => navigate('/')} className="logout-button">Logout</button>
+        <div className="header-buttons">
+          <button onClick={() => navigate('/home')} className="back-button">Back to Calendar</button>
+          <button onClick={() => navigate('/')} className="logout-button">Logout</button>
+        </div>
       </div>
-      <h1 className="journal-title">Journal Entry for {formattedDate}</h1>
-      <textarea
-        className="journal-textarea"
-        value={content}
-        placeholder="Start writing your journal entry here..."
-        onChange={(e) => setContent(e.target.value)}
-      />
-      <div className="journal-buttons">
-        <button onClick={handleSave} className="save-button">Save</button>
-        <button onClick={handleDelete} className="delete-button" disabled={!id}>Delete</button>
+      <div className="journal-entry-container">
+        <h1 className="journal-title">Journal Entry for {formattedDate}</h1>
+        <textarea
+          className="journal-textarea"
+          value={content}
+          placeholder="Start writing your journal entry here..."
+          onChange={(e) => setContent(e.target.value)}
+        />
+        <div className="journal-buttons">
+          <button onClick={handleSave} className="save-button">Save</button>
+          <button onClick={handleDelete} className="delete-button" disabled={!id}>Delete</button>
+        </div>
       </div>
-      <button onClick={() => navigate('/home')} className="back-button">Back to Calendar</button>
     </div>
   );
 };

@@ -52,3 +52,88 @@
   max-width: 1200px; /* Match the width of the journal page */
   margin-bottom: 40px; /* Add margin to create space at the bottom */
 }
+
+.calendar {
+  width: 100%;
+  max-width: 1000px; /* Slightly less wide than the header */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+.calendar-header {
+  font-weight: bold;
+  text-align: center;
+  padding: 10px;
+  background-color: #f5f5f5;
+  width: 100%;
+  box-sizing: border-box;
+  margin-bottom: 20px;
+}
+
+.calendar-nav-buttons {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 5px;
+  width: 100%;
+  box-sizing: border-box;
+  justify-content: center;
+}
+
+.calendar-day,
+.calendar-header {
+  text-align: center;
+  padding: 20px;
+  border: 1px solid #ddd;
+  box-sizing: border-box;
+}
+
+.day-number {
+  font-size: 1.2em;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.journal-link {
+  display: block;
+  text-decoration: none;
+  color: #e361c0;
+}
+
+.journal-link:hover {
+  text-decoration: underline;
+}
+
+.empty-day {
+  padding: 20px;
+}
+
+.current-day {
+  background-color: #f4c8e9;
+}
+
+.nav-button {
+  background-color: #f4c8e9;
+  color: white;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  border-radius: 5px;
+  margin: 0 10px;
+}
+
+.nav-button:hover {
+  background-color: #d88ec6;
+}
+
+.current-month-button {
+  margin: 0;
+}

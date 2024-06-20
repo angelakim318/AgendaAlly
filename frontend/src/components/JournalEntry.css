@@ -1,7 +1,7 @@
 .journal-container {
   width: 100%;
-  max-width: 1200px; /* Match the width of the home header and calendar */
-  margin: 20px auto; /* Add margin to create space at the top and bottom */
+  max-width: 1200px; 
+  margin: 20px auto; 
   padding: 0 20px;
   display: flex;
   flex-direction: column;
@@ -18,8 +18,14 @@
   background-color: #f5f5f5;
   border-bottom: 1px solid #ddd;
   border: 1px solid #ddd;
-  max-width: 1200px; /* Match the width of the home header and calendar */
+  max-width: 1200px; 
   margin-bottom: 20px;
+}
+
+.header-buttons {
+  display: flex;
+  gap: 10px;
+  align-items: center; /* Ensure buttons are vertically centered */
 }
 
 .title {
@@ -31,17 +37,29 @@
   font-size: 20px;
 }
 
-.logout-button {
+.logout-button, .back-button {
   background-color: #f4c8e9;
   color: white;
   border: none;
   padding: 10px 20px;
   cursor: pointer;
   border-radius: 5px;
+  height: 40px; /* Set a fixed height for both buttons */
+  display: flex;
+  align-items: center;
+  justify-content: center; /* Center text horizontally */
 }
 
-.logout-button:hover {
+.logout-button:hover, .back-button:hover {
   background-color: #d88ec6;
+}
+
+.journal-entry-container {
+  width: 100%;
+  max-width: 1000px; 
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .journal-title {
@@ -51,7 +69,6 @@
   border: 1px solid #ddd;
   background-color: #f5f5f5;
   width: 100%;
-  max-width: 1200px; /* Match the width of the home header and calendar */
   box-sizing: border-box;
   display: flex;
   justify-content: center;
@@ -61,7 +78,7 @@
 
 .journal-textarea {
   width: 100%;
-  max-width: 1200px; /* Match the width of the home header and calendar */
+  max-width: 1000px; 
   height: 300px;
   padding: 10px;
   font-size: 16px;
@@ -69,7 +86,7 @@
   border-radius: 5px;
   box-sizing: border-box;
   margin-bottom: 20px;
-  resize: none; /* Disable resizing */
+  resize: none; 
 }
 
 .journal-buttons {
@@ -77,7 +94,7 @@
   justify-content: center;
   gap: 10px;
   width: 100%;
-  max-width: 1200px; /* Match the width of the home header and calendar */
+  max-width: 1000px; 
 }
 
 .save-button, .delete-button, .back-button {
