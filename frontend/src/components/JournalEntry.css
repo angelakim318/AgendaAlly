@@ -1,7 +1,7 @@
 .journal-container {
   width: 100%;
   max-width: 1200px; /* Match the width of the home header and calendar */
-  margin: 40px auto; /* Add margin to create space at the top and bottom */
+  margin: 20px auto; /* Add margin to create space at the top and bottom */
   padding: 0 20px;
   display: flex;
   flex-direction: column;
