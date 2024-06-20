@@ -2,8 +2,8 @@ package com.ak.webapp.controller;
 
 import com.ak.webapp.model.JournalEntry;
 import com.ak.webapp.model.User;
-import com.ak.webapp.respository.JournalEntryRepository;
-import com.ak.webapp.respository.UserRepository;
+import com.ak.webapp.repository.JournalEntryRepository;
+import com.ak.webapp.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

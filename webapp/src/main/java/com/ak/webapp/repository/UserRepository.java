@@ -1,4 +1,4 @@
-package com.ak.webapp.respository;
+package com.ak.webapp.repository;
 
 import com.ak.webapp.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;

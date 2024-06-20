@@ -2,7 +2,7 @@ package com.ak.webapp.controller;
 
 import com.ak.webapp.dto.UserUpdateDto;
 import com.ak.webapp.model.User;
-import com.ak.webapp.respository.UserRepository;
+import com.ak.webapp.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
