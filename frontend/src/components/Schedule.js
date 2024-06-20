@@ -87,36 +87,37 @@ const Schedule = ({ user }) => {
     <div className="schedule-container">
       <div className="header">
         <div className="title">AgendaAlly</div>
-        <div className="welcome-message">Welcome, {user ? capitalizeFirstLetter(user.firstName) : ''}!</div>
         <div className="header-buttons">
           <button onClick={() => navigate('/home')} className="back-button">Back to Calendar</button>
           <button onClick={() => navigate('/')} className="logout-button">Logout</button>
         </div>
       </div>
-      <h1 className="schedule-title">Schedule for {formattedDate}</h1>
-      <div className="schedule-grid">
-        {[...Array(24).keys()].map(hour => {
-          const task = tasks.find(task => task.time === `${hour.toString().padStart(2, '0')}:00:00`);
-          return (
-            <div key={hour} className="schedule-row">
-              <div className="schedule-time">{formatTime(hour)}</div>
-              <div
-                className="schedule-task"
-                onClick={() => {
-                  setSelectedTask({
-                    id: task?.id || null,
-                    time: `${hour.toString().padStart(2, '0')}:00:00`,
-                    content: task?.task || ''
-                  });
-                  setIsSaveDisabled(task ? task.task.trim() === '' : true);
-                  setIsDeleteDisabled(!task || !task.id);
-                }}
-              >
-                {task?.task || ''}
+      <div className="content">
+        <h1 className="schedule-title">Schedule for {formattedDate}</h1>
+        <div className="schedule-grid">
+          {[...Array(24).keys()].map(hour => {
+            const task = tasks.find(task => task.time === `${hour.toString().padStart(2, '0')}:00:00`);
+            return (
+              <div key={hour} className="schedule-row">
+                <div className="schedule-time">{formatTime(hour)}</div>
+                <div
+                  className="schedule-task"
+                  onClick={() => {
+                    setSelectedTask({
+                      id: task?.id || null,
+                      time: `${hour.toString().padStart(2, '0')}:00:00`,
+                      content: task?.task || ''
+                    });
+                    setIsSaveDisabled(task ? task.task.trim() === '' : true);
+                    setIsDeleteDisabled(!task || !task.id);
+                  }}
+                >
+                  {task?.task || ''}
+                </div>
               </div>
-            </div>
-          );
-        })}
+            );
+          })}
+        </div>
       </div>
       {selectedTask.time && (
         <div className="task-modal">

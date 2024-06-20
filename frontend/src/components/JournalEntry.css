@@ -33,10 +33,6 @@
   font-weight: bold;
 }
 
-.welcome-message {
-  font-size: 20px;
-}
-
 .logout-button, .back-button {
   background-color: #f4c8e9;
   color: white;
@@ -97,7 +93,7 @@
   max-width: 1000px; 
 }
 
-.save-button, .delete-button, .back-button {
+.save-button, .delete-button {
   background-color: #f4c8e9;
   color: white;
   border: none;
@@ -107,6 +103,6 @@
   margin: 10px 0;
 }
 
-.save-button:hover, .delete-button:hover, .back-button:hover {
+.save-button:hover, .delete-button:hover {
   background-color: #d88ec6;
 }
