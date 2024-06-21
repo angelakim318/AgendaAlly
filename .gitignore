@@ -67,6 +67,9 @@ Thumbs.db
 docker-compose.override.yml
 .dockerignore
 
+# AWS CLI installation package
+AWSCLIV2.pkg
+
 # AWS Elastic Beanstalk
 .elasticbeanstalk/
 *.cfg.yml
