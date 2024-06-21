@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './styles/Schedule.css';
-import { capitalizeFirstLetter } from '../utils/capitalize';
 
 const Schedule = ({ user }) => {
   const { date } = useParams();
@@ -12,7 +11,7 @@ const Schedule = ({ user }) => {
   const [isDeleteDisabled, setIsDeleteDisabled] = useState(true);
   const navigate = useNavigate();
 
-  const fetchTasks = async () => {
+  const fetchTasks = useCallback(async () => {
     try {
       const response = await axios.get(`http://localhost:8080/api/schedule/${date}`, { withCredentials: true });
       setTasks(response.data);
@@ -20,11 +19,11 @@ const Schedule = ({ user }) => {
     } catch (error) {
       console.error('Error fetching schedule tasks', error);
     }
-  };
+  }, [date]);
 
   useEffect(() => {
     fetchTasks();
-  }, [date]);
+  }, [fetchTasks]);
 
   const handleTaskChange = (time, content) => {
     setSelectedTask({ ...selectedTask, time, content });

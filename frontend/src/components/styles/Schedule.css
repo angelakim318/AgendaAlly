@@ -127,23 +127,23 @@
   border-radius: 5px;
   box-sizing: border-box;
   margin-bottom: 20px;
-  resize: none; /* Disable resizing */
+  resize: none; 
 }
 
 .modal-buttons {
   display: flex;
   justify-content: space-between;
-  gap: 10px; /* Add space between buttons */
+  gap: 10px; 
 }
 
 .save-button, .delete-button, .close-button {
   background-color: #f4c8e9;
   color: white;
   border: none;
-  padding: 10px 20px; /* Consistent padding for all buttons */
+  padding: 10px 20px; 
   cursor: pointer;
   border-radius: 5px;
-  margin: 10px 0; /* Consistent margin for all buttons */
+  margin: 10px 0; 
   font-size: 13px;
 }
 

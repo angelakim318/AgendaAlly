@@ -6,7 +6,7 @@ import './styles/Login.css';
 const Login = ({ setUser }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [error, setError] = useState(''); // State for error message
+  const [error, setError] = useState(''); 
   const navigate = useNavigate();
 
   const handleLogin = async () => {
@@ -29,7 +29,7 @@ const Login = ({ setUser }) => {
       setUser(userResponse.data);
       navigate('/home');
     } catch (error) {
-      setError('Login failed. Please try again.'); // Set error message
+      setError('Login failed. Please try again.'); 
       console.error('There was an error logging in!', error);
     }
   };

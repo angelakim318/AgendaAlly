@@ -30,7 +30,7 @@
 .header-buttons {
   display: flex;
   gap: 10px;
-  align-items: center; /* Ensure buttons are vertically centered */
+  align-items: center; 
 }
 
 
@@ -42,10 +42,10 @@
   padding: 10px 20px;
   cursor: pointer;
   border-radius: 5px;
-  height: 40px; /* Set a fixed height for both buttons */
+  height: 40px; 
   display: flex;
   align-items: center;
-  justify-content: center; /* Center text horizontally */
+  justify-content: center; 
 }
 
 .logout-button:hover, .back-button:hover {
