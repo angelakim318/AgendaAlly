@@ -8,7 +8,7 @@ const Register = () => {
   const [password, setPassword] = useState('');
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
-  const [error, setError] = useState(''); // State for error message
+  const [error, setError] = useState(''); 
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -23,7 +23,7 @@ const Register = () => {
       console.log('User registered successfully', response.data);
       navigate('/login'); 
     } catch (error) {
-      setError('Registration failed. Please try again.'); // Set error message
+      setError('Registration failed. Please try again.'); 
       console.error('There was an error registering the user!', error);
     }
   };

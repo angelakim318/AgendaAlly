@@ -19,7 +19,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-bottom: 10px; /* Add bottom margin here */
+  margin-bottom: 10px; 
 }
 
 .calendar-header {

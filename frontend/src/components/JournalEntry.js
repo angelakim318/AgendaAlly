@@ -2,12 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './styles/JournalEntry.css';
-import { capitalizeFirstLetter } from '../utils/capitalize';
 
 const JournalEntry = ({ user }) => {
   const { date } = useParams();
   const [id, setId] = useState(null);
   const [content, setContent] = useState('');
+  const [isSaveDisabled, setIsSaveDisabled] = useState(true); // New state for save button
+  const [originalContent, setOriginalContent] = useState(''); // State to track original content
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -16,10 +17,14 @@ const JournalEntry = ({ user }) => {
         const response = await axios.get(`http://localhost:8080/api/journal/${date}`, { withCredentials: true });
         setId(response.data.id);
         setContent(response.data.content || '');
+        setOriginalContent(response.data.content || ''); // Set original content
+        setIsSaveDisabled(true); // Disable save if no changes
       } catch (error) {
         if (error.response && error.response.status === 404) {
           setContent('');
           setId(null);
+          setOriginalContent(''); // Reset original content
+          setIsSaveDisabled(true); // Disable save if no changes
         } else {
           console.error('Error fetching journal entry', error);
         }
@@ -29,11 +34,19 @@ const JournalEntry = ({ user }) => {
     fetchEntry();
   }, [date]);
 
+  const handleContentChange = (e) => {
+    const newContent = e.target.value;
+    setContent(newContent);
+    setIsSaveDisabled(newContent.trim() === '' || newContent === originalContent); // Disable save if no changes
+  };
+
   const handleSave = async () => {
     try {
       const payload = { content };
       const response = await axios.post(`http://localhost:8080/api/journal/${date}`, payload, { withCredentials: true });
       setId(response.data.id);
+      setOriginalContent(content); // Update original content after saving
+      setIsSaveDisabled(true); // Disable save after saving
     } catch (error) {
       console.error('Error saving journal entry', error);
     }
@@ -45,6 +58,8 @@ const JournalEntry = ({ user }) => {
         await axios.delete(`http://localhost:8080/api/journal/${id}`, { withCredentials: true });
         setContent('');
         setId(null);
+        setOriginalContent(''); // Reset original content after deleting
+        setIsSaveDisabled(true); // Disable save after deleting
       }
     } catch (error) {
       console.error('Error deleting journal entry', error);
@@ -73,10 +88,10 @@ const JournalEntry = ({ user }) => {
           className="journal-textarea"
           value={content}
           placeholder="Start writing your journal entry here..."
-          onChange={(e) => setContent(e.target.value)}
+          onChange={handleContentChange}
         />
         <div className="journal-buttons">
-          <button onClick={handleSave} className="save-button">Save</button>
+          <button onClick={handleSave} className="save-button" disabled={isSaveDisabled}>Save</button>
           <button onClick={handleDelete} className="delete-button" disabled={!id}>Delete</button>
         </div>
       </div>

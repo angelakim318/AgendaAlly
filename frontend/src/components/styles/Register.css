@@ -8,7 +8,7 @@
   border-bottom: 1px solid #ddd;
   border: 1px solid #ddd;
   max-width: 1200px;
-  margin: 20px auto; /* Adjusted margin to lessen the space at the top */
+  margin: 20px auto; 
 }
 
 .title {
@@ -21,8 +21,8 @@
   flex-direction: column;
   align-items: center;
   width: 100%;
-  max-width: 1200px; /* Match the width of other pages */
-  margin: 20px auto; /* Adjusted margin to create space at the top and bottom */
+  max-width: 1200px; 
+  margin: 20px auto;
   padding: 0 20px;
   box-sizing: border-box;
 }
@@ -77,7 +77,7 @@
   cursor: pointer;
   border-radius: 5px;
   margin-top: 20px;
-  align-self: center; /* Center the register button */
+  align-self: center; 
   font-size: 13px;
 }
 
