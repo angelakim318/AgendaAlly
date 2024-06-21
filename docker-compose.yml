@@ -3,11 +3,15 @@ services:
     build: ./frontend
     ports:
       - "3000:3000"
-  
+    volumes:
+      - ./frontend:/app
+
   backend:
-    build: ./webapp  
+    build: ./webapp
     ports:
       - "8080:8080"
+    volumes:
+      - ./webapp:/app
     environment:
       SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/webapp_db?serverTimezone=UTC
       SPRING_DATASOURCE_USERNAME: ${DB_USER}
