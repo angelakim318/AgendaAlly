@@ -6,7 +6,7 @@ import './styles/Login.css';
 const Login = ({ setUser }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [error, setError] = useState(''); 
+  const [error, setError] = useState('');
   const navigate = useNavigate();
 
   const handleLogin = async () => {
@@ -29,7 +29,7 @@ const Login = ({ setUser }) => {
       setUser(userResponse.data);
       navigate('/home');
     } catch (error) {
-      setError('Login failed. Please try again.'); 
+      setError('Login failed. Please try again.');
       console.error('There was an error logging in!', error);
     }
   };
@@ -41,19 +41,27 @@ const Login = ({ setUser }) => {
       </div>
       <div className="login-container">
         <h2>Login</h2>
-        {error && <p className="error-message">{error}</p>} {/* Conditionally render error message */}
-        <input
-          type="text"
-          placeholder="Username"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-        />
-        <input
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
+        {error && <p className="error-message">{error}</p>}
+        <div className="input-group">
+          <label htmlFor="username">Username</label>
+          <input
+            type="text"
+            id="username"
+            placeholder="Username"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+          />
+        </div>
+        <div className="input-group">
+          <label htmlFor="password">Password</label>
+          <input
+            type="password"
+            id="password"
+            placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+        </div>
         <button onClick={handleLogin}>Login</button>
         <div className="register-link">
           <p>Don't have an account? <Link to="/register">Register here</Link></p>
