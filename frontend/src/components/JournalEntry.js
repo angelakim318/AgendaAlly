@@ -17,7 +17,7 @@ const JournalEntry = ({ user }) => {
         const response = await axios.get(`http://localhost:8080/api/journal/${date}`, { withCredentials: true });
         setId(response.data.id);
         setContent(response.data.content || '');
-        setOriginalContent(response.data.content || ''); // Set original content
+        setOriginalContent(response.data.content || ''); 
         setIsSaveDisabled(true); // Disable save if no changes
       } catch (error) {
         if (error.response && error.response.status === 404) {
