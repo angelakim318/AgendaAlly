@@ -45,10 +45,20 @@
   margin-bottom: 20px;
 }
 
-.login-container input {
+.input-group {
+  width: 100%;
+  margin-bottom: 15px;
+}
+
+.input-group label {
+  display: block;
+  margin-bottom: 5px;
+  color: #333;
+}
+
+.input-group input {
   width: 100%;
   padding: 10px;
-  margin: 10px 0;
   border: 1px solid #ddd;
   border-radius: 5px;
   font-size: 13px;
@@ -63,11 +73,12 @@
   cursor: pointer;
   border-radius: 5px;
   margin-top: 20px;
-  font-size: 13px;
+  font-size: 16px;
 }
 
 .login-container button:hover {
   background-color: #d88ec6;
+  font-weight: bold;
 }
 
 .register-link {
@@ -76,12 +87,15 @@
 }
 
 .register-link a {
-  color: #e361c0;
+  color: #d88ec6;
   text-decoration: none;
 }
 
 .register-link a:hover {
-  text-decoration: underline;
+  font-weight: bold;
+  border: 1px solid #d88ec6;
+  padding: 2px 5px;
+  border-radius: 3px;
 }
 
 .error-message {
