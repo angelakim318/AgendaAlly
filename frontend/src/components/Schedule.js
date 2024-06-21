@@ -76,10 +76,12 @@ const Schedule = ({ user }) => {
     day: 'numeric'
   });
 
-  const formatTime = (hour) => {
-    const period = hour < 12 ? 'AM' : 'PM';
-    const formattedHour = hour % 12 === 0 ? 12 : hour % 12;
-    return `${formattedHour}:00 ${period}`;
+  const formatTime = (time) => {
+    const [hour, minute] = time.split(':'); // Removed second
+    const hourInt = parseInt(hour, 10);
+    const period = hourInt < 12 ? 'AM' : 'PM';
+    const formattedHour = hourInt % 12 === 0 ? 12 : hourInt % 12;
+    return `${formattedHour}:${minute} ${period}`;
   };
 
   return (
@@ -98,7 +100,7 @@ const Schedule = ({ user }) => {
             const task = tasks.find(task => task.time === `${hour.toString().padStart(2, '0')}:00:00`);
             return (
               <div key={hour} className="schedule-row">
-                <div className="schedule-time">{formatTime(hour)}</div>
+                <div className="schedule-time">{formatTime(`${hour.toString().padStart(2, '0')}:00:00`)}</div>
                 <div
                   className="schedule-task"
                   onClick={() => {
@@ -120,6 +122,7 @@ const Schedule = ({ user }) => {
       </div>
       {selectedTask.time && (
         <div className="task-modal">
+          <h2 className="task-modal-title">{`Task for ${formatTime(selectedTask.time)}`}</h2>
           <textarea
             value={selectedTask.content}
             onChange={(e) => handleTaskChange(selectedTask.time, e.target.value)}
