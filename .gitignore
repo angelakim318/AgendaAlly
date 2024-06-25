@@ -86,3 +86,8 @@ AWSCLIV2.pkg
 **/eb-ssh*
 **/eb-ssh*.log
 **/eb-ssh*.log.*
+
+# Elastic Beanstalk Files
+.elasticbeanstalk/*
+!.elasticbeanstalk/*.cfg.yml
+!.elasticbeanstalk/*.global.yml
