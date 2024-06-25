@@ -4,7 +4,6 @@ import com.ak.webapp.dto.UserUpdateDto;
 import com.ak.webapp.model.User;
 import com.ak.webapp.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
@@ -16,9 +15,6 @@ public class UserController {
 
     @Autowired
     private UserRepository userRepository;
-
-    @Autowired
-    private PasswordEncoder passwordEncoder;
 
     @GetMapping("/{id}")
     public User getUserById(@PathVariable Long id) {
