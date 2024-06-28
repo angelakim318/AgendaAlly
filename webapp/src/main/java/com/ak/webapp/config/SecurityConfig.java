@@ -46,7 +46,7 @@ public class SecurityConfig {
                 .exceptionHandling(exceptionHandling -> exceptionHandling
                         .authenticationEntryPoint(customAuthenticationEntryPoint))
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/auth/**", "/login", "/error", "/home", "/api/journal/**").permitAll()
+                        .requestMatchers("/api/auth/**", "/login", "/error", "/home", "/api/journal/**", "/actuator/health", "/actuator/info").permitAll()
                         .anyRequest().authenticated())
                 .formLogin(form -> form
                         .loginPage("/login")
@@ -94,4 +94,3 @@ public class SecurityConfig {
                 .httpFirewall(allowUrlEncodedSlashHttpFirewall());
     }
 }
-
