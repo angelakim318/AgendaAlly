@@ -46,7 +46,7 @@ public class SecurityConfig {
                 .exceptionHandling(exceptionHandling -> exceptionHandling
                         .authenticationEntryPoint(customAuthenticationEntryPoint))
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/auth/**", "/login", "/error", "/home", "/api/journal/**", "/actuator/health", "/actuator/info").permitAll()
+                        .requestMatchers("/api/auth/**", "/login", "/error", "/home", "/api/journal/**", "/actuator/**").permitAll()
                         .anyRequest().authenticated())
                 .formLogin(form -> form
                         .loginPage("/login")
@@ -84,7 +84,7 @@ public class SecurityConfig {
         firewall.setAllowUrlEncodedSlash(true);
         firewall.setAllowSemicolon(true);
         firewall.setAllowUrlEncodedPercent(true);
-        firewall.setAllowedHttpMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+        firewall.setAllowedHttpMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS", "HEAD"));
         return firewall;
     }
 
