@@ -12,9 +12,9 @@ services:
     ports:
       - "8080:8080"
     environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/webapp_db?serverTimezone=UTC
-      SPRING_DATASOURCE_USERNAME: ${DB_USER}
-      SPRING_DATASOURCE_PASSWORD: ${DB_PASSWORD}
+      DB_URL: jdbc:mysql://db:3306/webapp_db
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
       SPRING_JPA_HIBERNATE_DDL_AUTO: update
     depends_on:
       - db
