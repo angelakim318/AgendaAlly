@@ -5,7 +5,7 @@
       "name": "backend",
       "image": "angelahjk25/agendaally-backend",
       "essential": true,
-      "memory": 512,
+      "memory": 1024,
       "portMappings": [
         {
           "hostPort": 8080,
@@ -15,15 +15,15 @@
       "environment": [
         {
           "name": "DB_URL",
-          "value": "jdbc:mysql://db:3306/webapp_db"
+          "value": "${DB_URL}"
         },
         {
           "name": "DB_USER",
-          "value": "Angela"
+          "value": "${DB_USER}"
         },
         {
           "name": "DB_PASSWORD",
-          "value": "Angela123"
+          "value": "${DB_PASSWORD}"
         }
       ]
     },
@@ -31,7 +31,7 @@
       "name": "frontend",
       "image": "angelahjk25/agendaally-frontend",
       "essential": true,
-      "memory": 512,
+      "memory": 1024,
       "portMappings": [
         {
           "hostPort": 3000,
@@ -43,7 +43,7 @@
       "name": "db",
       "image": "mysql:8.0",
       "essential": true,
-      "memory": 512,
+      "memory": 1024,
       "portMappings": [
         {
           "hostPort": 3306,
@@ -57,11 +57,11 @@
         },
         {
           "name": "MYSQL_USER",
-          "value": "Angela"
+          "value": "${DB_USER}"
         },
         {
           "name": "MYSQL_PASSWORD",
-          "value": "Angela123"
+          "value": "${DB_PASSWORD}"
         }
       ]
     }
