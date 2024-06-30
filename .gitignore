@@ -91,3 +91,4 @@ AWSCLIV2.pkg
 .elasticbeanstalk/*
 !.elasticbeanstalk/*.cfg.yml
 !.elasticbeanstalk/*.global.yml
+AgendaAllyZipped.zip
