@@ -3,9 +3,9 @@
   "containerDefinitions": [
     {
       "name": "backend",
-      "image": "angelahjk25/agendaally-backend",
+      "image": "angelahjk25/agendaally-backend:latest",
       "essential": true,
-      "memory": 1024,
+      "memory": 512,
       "portMappings": [
         {
           "hostPort": 8080,
@@ -29,9 +29,9 @@
     },
     {
       "name": "frontend",
-      "image": "angelahjk25/agendaally-frontend",
+      "image": "angelahjk25/agendaally-frontend:latest",
       "essential": true,
-      "memory": 1024,
+      "memory": 512,
       "portMappings": [
         {
           "hostPort": 3000,
@@ -43,7 +43,7 @@
       "name": "db",
       "image": "mysql:8.0",
       "essential": true,
-      "memory": 1024,
+      "memory": 512,
       "portMappings": [
         {
           "hostPort": 3306,
