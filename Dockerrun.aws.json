@@ -1,5 +1,5 @@
 {
-  "AWSEBDockerrunVersion": 3,
+  "AWSEBDockerrunVersion": "2",
   "containerDefinitions": [
     {
       "name": "backend",
@@ -10,6 +10,20 @@
         {
           "hostPort": 8080,
           "containerPort": 8080
+        }
+      ],
+      "environment": [
+        {
+          "name": "DB_URL",
+          "value": "jdbc:mysql://db:3306/webapp_db"
+        },
+        {
+          "name": "DB_USER",
+          "value": "Angela"
+        },
+        {
+          "name": "DB_PASSWORD",
+          "value": "Angela123"
         }
       ]
     },
@@ -34,6 +48,20 @@
         {
           "hostPort": 3306,
           "containerPort": 3306
+        }
+      ],
+      "environment": [
+        {
+          "name": "MYSQL_DATABASE",
+          "value": "webapp_db"
+        },
+        {
+          "name": "MYSQL_USER",
+          "value": "Angela"
+        },
+        {
+          "name": "MYSQL_PASSWORD",
+          "value": "Angela123"
         }
       ]
     }
