@@ -35,7 +35,7 @@
 
 
 .logout-button, .back-button {
-  background-color: #f4c8e9;
+  background-color: #307ad5;
   font-size: 13px;
   color: white;
   border: none;
@@ -98,7 +98,7 @@
 }
 
 .save-button, .delete-button {
-  background-color: #f4c8e9;
+  background-color: #307ad5;
   color: white;
   border: none;
   padding: 10px 20px;
