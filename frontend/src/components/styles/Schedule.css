@@ -47,7 +47,7 @@
 }
 
 .logout-button:hover, .back-button:hover {
-  background-color: #d88ec6;
+  background-color: #135cb5;
   font-weight: bold;
 }
 
@@ -157,7 +157,7 @@
 }
 
 .save-button:hover, .delete-button:hover, .close-button:hover {
-  background-color: #d88ec6;
+  background-color: #135cb5;
   font-weight: bold;
 }
 

@@ -36,7 +36,7 @@
 }
 
 .logout-button:hover {
-  background-color: #d88ec6;
+  background-color: #135cb5;
   font-weight: bold;
 }
 
@@ -109,7 +109,7 @@
 .journal-link:hover,
 .schedule-link:hover {
   font-weight: bold;
-  border: 1px solid #d88ec6;
+  border: 1px solid #135cb5;
   padding: 2px 5px;
   border-radius: 3px;
 }
@@ -134,7 +134,7 @@
 }
 
 .nav-button:hover {
-  background-color: #d88ec6;
+  background-color: #135cb5;
   font-weight: bold;
 }
 
