@@ -1,14 +1,14 @@
 version: '3.9'
 services:
   frontend:
-    build: ./frontend
+    image: angelahjk25/agendaally-frontend:latest
     ports:
       - "3000:3000"
-    volumes:
-      - ./frontend:/app
+    environment:
+      - NODE_ENV=production
 
   backend:
-    build: ./webapp
+    image: angelahjk25/agendaally-backend:latest
     ports:
       - "8080:8080"
     environment:
