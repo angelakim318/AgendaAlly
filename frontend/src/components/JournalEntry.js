@@ -45,8 +45,8 @@ const JournalEntry = ({ user }) => {
   };
 
   const cleanContent = (content) => {
-    // Remove empty paragraphs
-    return content.replace(/<p><br><\/p>/g, '');
+    // Remove empty paragraphs and excessive new lines
+    return content.replace(/<p><br><\/p>/g, '').replace(/\n{2,}/g, '\n');
   };
 
   const handleSave = async () => {
