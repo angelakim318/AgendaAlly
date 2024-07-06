@@ -33,7 +33,6 @@
   align-items: center; 
 }
 
-
 .logout-button, .back-button {
   background-color: #307ad5;
   font-size: 13px;
@@ -76,6 +75,42 @@
   font-size: 24px;
 }
 
+.journal-content {
+  width: 100%;
+  max-width: 1000px;
+  height: 300px;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  box-sizing: border-box;
+  margin-bottom: 20px;
+  background-color: #fff;
+  overflow-y: auto; /* Add scroll bar when content overflows */
+}
+
+.journal-content p, .journal-content h1, .journal-content h2, .journal-content h3, .journal-content ul, .journal-content ol {
+  margin: 0; /* Remove margin */
+}
+
+.journal-content ul, .journal-content ol {
+  padding-left: 20px; /* Add padding for lists */
+}
+
+.journal-content ul ul, .journal-content ol ol, .journal-content ul ol, .journal-content ol ul {
+  margin-left: 20px; /* Indent sub-lists */
+}
+
+.journal-content h1, .journal-content h2, .journal-content h3 {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.journal-placeholder {
+  color: #888;
+  font-style: italic;
+}
+
 .journal-textarea {
   width: 100%;
   max-width: 1000px; 
@@ -86,7 +121,6 @@
   border-radius: 5px;
   box-sizing: border-box;
   margin-bottom: 20px;
-  resize: none; 
 }
 
 .journal-buttons {
@@ -97,7 +131,7 @@
   max-width: 1000px; 
 }
 
-.save-button, .delete-button {
+.save-button, .delete-button, .edit-button {
   background-color: #307ad5;
   color: white;
   border: none;
@@ -108,7 +142,22 @@
   font-size: 13px;
 }
 
-.save-button:hover, .delete-button:hover {
+.save-button:hover, .delete-button:hover, .edit-button:hover {
   background-color: #135cb5;
   font-weight: bold;
+}
+
+.ql-editor {
+  height: calc(100% - 42px); /* Ensure editor takes full height, accounting for the toolbar height */
+  padding: 10px;
+  overflow-y: auto; /* Add scroll bar when content overflows */
+}
+
+.ql-container.ql-snow {
+  border: none; /* Remove outer border */
+  height: 100%; /* Ensure container takes full height */
+}
+
+.ql-toolbar.ql-snow {
+  border: none; /* Remove outer border of toolbar */
 }

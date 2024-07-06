@@ -1,14 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
 import './styles/JournalEntry.css';
 
 const JournalEntry = ({ user }) => {
   const { date } = useParams();
   const [id, setId] = useState(null);
   const [content, setContent] = useState('');
-  const [isSaveDisabled, setIsSaveDisabled] = useState(true); // New state for save button
-  const [originalContent, setOriginalContent] = useState(''); // State to track original content
+  const [isEditing, setIsEditing] = useState(false);
+  const [isSaveDisabled, setIsSaveDisabled] = useState(true);
+  const [originalContent, setOriginalContent] = useState('');
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -17,14 +20,16 @@ const JournalEntry = ({ user }) => {
         const response = await axios.get(`http://localhost:8080/api/journal/${date}`, { withCredentials: true });
         setId(response.data.id);
         setContent(response.data.content || '');
-        setOriginalContent(response.data.content || ''); 
-        setIsSaveDisabled(true); // Disable save if no changes
+        setOriginalContent(response.data.content || '');
+        setIsSaveDisabled(true);
+        setIsEditing(false);
       } catch (error) {
         if (error.response && error.response.status === 404) {
           setContent('');
           setId(null);
-          setOriginalContent(''); // Reset original content
-          setIsSaveDisabled(true); // Disable save if no changes
+          setOriginalContent('');
+          setIsSaveDisabled(true);
+          setIsEditing(false);
         } else {
           console.error('Error fetching journal entry', error);
         }
@@ -34,19 +39,25 @@ const JournalEntry = ({ user }) => {
     fetchEntry();
   }, [date]);
 
-  const handleContentChange = (e) => {
-    const newContent = e.target.value;
-    setContent(newContent);
-    setIsSaveDisabled(newContent.trim() === '' || newContent === originalContent); // Disable save if no changes
+  const handleContentChange = (value) => {
+    setContent(value);
+    setIsSaveDisabled(value.trim() === '' || value === originalContent);
+  };
+
+  const cleanContent = (content) => {
+    // Remove empty paragraphs
+    return content.replace(/<p><br><\/p>/g, '');
   };
 
   const handleSave = async () => {
     try {
-      const payload = { content };
+      const cleanedContent = cleanContent(content);
+      const payload = { content: cleanedContent };
       const response = await axios.post(`http://localhost:8080/api/journal/${date}`, payload, { withCredentials: true });
       setId(response.data.id);
-      setOriginalContent(content); // Update original content after saving
-      setIsSaveDisabled(true); // Disable save after saving
+      setOriginalContent(cleanedContent);
+      setIsSaveDisabled(true);
+      setIsEditing(false);
     } catch (error) {
       console.error('Error saving journal entry', error);
     }
@@ -58,8 +69,9 @@ const JournalEntry = ({ user }) => {
         await axios.delete(`http://localhost:8080/api/journal/${id}`, { withCredentials: true });
         setContent('');
         setId(null);
-        setOriginalContent(''); // Reset original content after deleting
-        setIsSaveDisabled(true); // Disable save after deleting
+        setOriginalContent('');
+        setIsSaveDisabled(true);
+        setIsEditing(false);
       }
     } catch (error) {
       console.error('Error deleting journal entry', error);
@@ -84,14 +96,26 @@ const JournalEntry = ({ user }) => {
       </div>
       <div className="journal-entry-container">
         <h1 className="journal-title">Journal Entry for {formattedDate}</h1>
-        <textarea
-          className="journal-textarea"
-          value={content}
-          placeholder="Start writing your journal entry here..."
-          onChange={handleContentChange}
-        />
+        {!isEditing && (
+          <div className="journal-content">
+            {content ? (
+              <div dangerouslySetInnerHTML={{ __html: content }} />
+            ) : (
+              <p className="journal-placeholder">Add a journal entry for today</p>
+            )}
+          </div>
+        )}
+        {isEditing && (
+          <ReactQuill
+            value={content}
+            onChange={handleContentChange}
+            placeholder="Start writing your journal entry here..."
+            className="journal-textarea"
+          />
+        )}
         <div className="journal-buttons">
-          <button onClick={handleSave} className="save-button" disabled={isSaveDisabled}>Save</button>
+          {!isEditing && <button onClick={() => setIsEditing(true)} className="edit-button">Add/Modify</button>}
+          {isEditing && <button onClick={handleSave} className="save-button" disabled={isSaveDisabled}>Save</button>}
           <button onClick={handleDelete} className="delete-button" disabled={!id}>Delete</button>
         </div>
       </div>
