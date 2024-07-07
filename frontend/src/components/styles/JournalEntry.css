@@ -1,7 +1,7 @@
 .journal-container {
   width: 100%;
-  max-width: 1200px; 
-  margin: 20px auto; 
+  max-width: 1200px;
+  margin: 20px auto;
   padding: 0 20px;
   display: flex;
   flex-direction: column;
@@ -15,10 +15,10 @@
   align-items: center;
   width: 100%;
   padding: 20px;
-  background-color: #f5f5f5;
-  border-bottom: 1px solid #ddd;
-  border: 1px solid #ddd;
-  max-width: 1200px; 
+  background-color: #ddf3e6;
+  border-bottom: 1px solid #2abe6a;
+  border: 1px solid #2abe6a;
+  max-width: 1200px;
   margin-bottom: 20px;
 }
 
@@ -30,31 +30,31 @@
 .header-buttons {
   display: flex;
   gap: 10px;
-  align-items: center; 
+  align-items: center;
 }
 
 .logout-button, .back-button {
-  background-color: #307ad5;
+  background-color: #2abe6a;
   font-size: 13px;
   color: white;
   border: none;
   padding: 10px 20px;
   cursor: pointer;
   border-radius: 5px;
-  height: 40px; 
+  height: 40px;
   display: flex;
   align-items: center;
-  justify-content: center; 
+  justify-content: center;
 }
 
 .logout-button:hover, .back-button:hover {
-  background-color: #135cb5;
+  background-color: #2aab5c;
   font-weight: bold;
 }
 
 .journal-entry-container {
   width: 100%;
-  max-width: 1000px; 
+  max-width: 1000px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -64,8 +64,8 @@
   font-weight: bold;
   text-align: center;
   padding: 10px;
-  border: 1px solid #ddd;
-  background-color: #f5f5f5;
+  border: 1px solid #2abe6a;
+  background-color: #ddf3e6;
   width: 100%;
   box-sizing: border-box;
   display: flex;
@@ -75,30 +75,35 @@
   font-size: 24px;
 }
 
-.journal-content {
+.journal-content, .editor-wrapper {
   width: 100%;
   max-width: 1000px;
-  height: 300px;
+  height: 400px;
   padding: 10px;
   font-size: 16px;
-  border: 1px solid #ddd;
+  border: 1px solid #2abe6a;
   border-radius: 5px;
   box-sizing: border-box;
   margin-bottom: 20px;
-  background-color: #fff;
-  overflow-y: auto; /* Add scroll bar when content overflows */
+  background-color: #ffff;
+  overflow-y: auto;
+}
+
+.editor-container {
+  width: 100%;
+  height: calc(100% - 50px); /* Adjust the height based on the toolbar */
 }
 
 .journal-content p, .journal-content h1, .journal-content h2, .journal-content h3, .journal-content ul, .journal-content ol {
-  margin: 0; /* Remove margin */
+  margin: 0;
 }
 
 .journal-content ul, .journal-content ol {
-  padding-left: 20px; /* Add padding for lists */
+  padding-left: 20px;
 }
 
 .journal-content ul ul, .journal-content ol ol, .journal-content ul ol, .journal-content ol ul {
-  margin-left: 20px; /* Indent sub-lists */
+  margin-left: 20px;
 }
 
 .journal-content h1, .journal-content h2, .journal-content h3 {
@@ -113,14 +118,11 @@
 
 .journal-textarea {
   width: 100%;
-  max-width: 1000px; 
-  height: 300px;
-  padding: 10px;
+  height: 100%;
   font-size: 16px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
+  border: none;
   box-sizing: border-box;
-  margin-bottom: 20px;
+  overflow-y: auto;
 }
 
 .journal-buttons {
@@ -128,11 +130,11 @@
   justify-content: center;
   gap: 10px;
   width: 100%;
-  max-width: 1000px; 
+  max-width: 1000px;
 }
 
-.save-button, .delete-button, .edit-button {
-  background-color: #307ad5;
+.save-button, .delete-button, .edit-button, .cancel-button {
+  background-color: #2abe6a;
   color: white;
   border: none;
   padding: 10px 20px;
@@ -142,22 +144,21 @@
   font-size: 13px;
 }
 
-.save-button:hover, .delete-button:hover, .edit-button:hover {
-  background-color: #135cb5;
+.save-button:hover, .delete-button:hover, .edit-button:hover, .cancel-button:hover {
+  background-color: #2aab5c;
   font-weight: bold;
 }
 
-.ql-editor {
-  height: calc(100% - 42px); /* Ensure editor takes full height, accounting for the toolbar height */
+.DraftEditor-root {
+  width: 100%;
+  height: 100%;
+}
+
+.public-DraftEditor-content {
+  height: 100%;
   padding: 10px;
-  overflow-y: auto; /* Add scroll bar when content overflows */
-}
-
-.ql-container.ql-snow {
-  border: none; /* Remove outer border */
-  height: 100%; /* Ensure container takes full height */
-}
-
-.ql-toolbar.ql-snow {
-  border: none; /* Remove outer border of toolbar */
+  border: none;
+  box-sizing: border-box;
+  background-color: #fff;
+  overflow-y: auto;
 }

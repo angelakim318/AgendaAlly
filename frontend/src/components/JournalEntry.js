@@ -1,14 +1,45 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import ReactQuill from 'react-quill';
-import 'react-quill/dist/quill.snow.css';
+import { EditorState, RichUtils, getDefaultKeyBinding } from 'draft-js';
+import Editor from '@draft-js-plugins/editor';
+import createToolbarPlugin, { Separator } from '@draft-js-plugins/static-toolbar';
+import '@draft-js-plugins/static-toolbar/lib/plugin.css';
+import { stateFromHTML } from 'draft-js-import-html';
+import { stateToHTML } from 'draft-js-export-html';
+import {
+  BoldButton,
+  ItalicButton,
+  UnderlineButton,
+  HeadlineOneButton,
+  HeadlineTwoButton,
+  HeadlineThreeButton,
+  UnorderedListButton,
+  OrderedListButton,
+} from '@draft-js-plugins/buttons';
 import './styles/JournalEntry.css';
+
+const toolbarPlugin = createToolbarPlugin();
+const { Toolbar } = toolbarPlugin;
+const plugins = [toolbarPlugin];
+
+const myKeyBindingFn = (e) => {
+  return getDefaultKeyBinding(e);
+};
+
+const handleKeyCommand = (command, editorState, setEditorState) => {
+  const newState = RichUtils.handleKeyCommand(editorState, command);
+  if (newState) {
+    setEditorState(newState);
+    return 'handled';
+  }
+  return 'not-handled';
+};
 
 const JournalEntry = ({ user }) => {
   const { date } = useParams();
   const [id, setId] = useState(null);
-  const [content, setContent] = useState('');
+  const [editorState, setEditorState] = useState(() => EditorState.createEmpty());
   const [isEditing, setIsEditing] = useState(false);
   const [isSaveDisabled, setIsSaveDisabled] = useState(true);
   const [originalContent, setOriginalContent] = useState('');
@@ -18,14 +49,20 @@ const JournalEntry = ({ user }) => {
     const fetchEntry = async () => {
       try {
         const response = await axios.get(`http://localhost:8080/api/journal/${date}`, { withCredentials: true });
+        if (response.data.content) {
+          const contentState = stateFromHTML(response.data.content);
+          setEditorState(EditorState.createWithContent(contentState));
+          setOriginalContent(response.data.content);
+        } else {
+          setEditorState(EditorState.createEmpty());
+          setOriginalContent('');
+        }
         setId(response.data.id);
-        setContent(response.data.content || '');
-        setOriginalContent(response.data.content || '');
         setIsSaveDisabled(true);
         setIsEditing(false);
       } catch (error) {
         if (error.response && error.response.status === 404) {
-          setContent('');
+          setEditorState(EditorState.createEmpty());
           setId(null);
           setOriginalContent('');
           setIsSaveDisabled(true);
@@ -39,23 +76,19 @@ const JournalEntry = ({ user }) => {
     fetchEntry();
   }, [date]);
 
-  const handleContentChange = (value) => {
-    setContent(value);
-    setIsSaveDisabled(value.trim() === '' || value === originalContent);
-  };
-
-  const cleanContent = (content) => {
-    // Remove empty paragraphs and excessive new lines
-    return content.replace(/<p><br><\/p>/g, '').replace(/\n{2,}/g, '\n');
+  const handleEditorChange = (state) => {
+    setEditorState(state);
+    const currentContent = stateToHTML(state.getCurrentContent()).trim();
+    setIsSaveDisabled(currentContent === '' || currentContent === originalContent);
   };
 
   const handleSave = async () => {
     try {
-      const cleanedContent = cleanContent(content);
-      const payload = { content: cleanedContent };
+      const currentContent = stateToHTML(editorState.getCurrentContent()).trim();
+      const payload = { content: currentContent };
       const response = await axios.post(`http://localhost:8080/api/journal/${date}`, payload, { withCredentials: true });
       setId(response.data.id);
-      setOriginalContent(cleanedContent);
+      setOriginalContent(currentContent);
       setIsSaveDisabled(true);
       setIsEditing(false);
     } catch (error) {
@@ -67,7 +100,7 @@ const JournalEntry = ({ user }) => {
     try {
       if (id) {
         await axios.delete(`http://localhost:8080/api/journal/${id}`, { withCredentials: true });
-        setContent('');
+        setEditorState(EditorState.createEmpty());
         setId(null);
         setOriginalContent('');
         setIsSaveDisabled(true);
@@ -98,25 +131,55 @@ const JournalEntry = ({ user }) => {
         <h1 className="journal-title">Journal Entry for {formattedDate}</h1>
         {!isEditing && (
           <div className="journal-content">
-            {content ? (
-              <div dangerouslySetInnerHTML={{ __html: content }} />
+            {originalContent ? (
+              <div dangerouslySetInnerHTML={{ __html: originalContent }} />
             ) : (
-              <p className="journal-placeholder">Add a journal entry for today</p>
+              <p className="journal-placeholder">Add a journal entry...</p>
             )}
           </div>
         )}
         {isEditing && (
-          <ReactQuill
-            value={content}
-            onChange={handleContentChange}
-            placeholder="Start writing your journal entry here..."
-            className="journal-textarea"
-          />
+          <div className="editor-wrapper">
+            <Toolbar>
+              {(externalProps) => (
+                <>
+                  <BoldButton {...externalProps} />
+                  <ItalicButton {...externalProps} />
+                  <UnderlineButton {...externalProps} />
+                  <Separator {...externalProps} />
+                  <HeadlineOneButton {...externalProps} />
+                  <HeadlineTwoButton {...externalProps} />
+                  <HeadlineThreeButton {...externalProps} />
+                  <UnorderedListButton {...externalProps} />
+                  <OrderedListButton {...externalProps} />
+                </>
+              )}
+            </Toolbar>
+            <div className="editor-container">
+              <Editor
+                editorState={editorState}
+                onChange={handleEditorChange}
+                plugins={plugins}
+                className="journal-textarea"
+                keyBindingFn={myKeyBindingFn}
+                handleKeyCommand={(command) => handleKeyCommand(command, editorState, setEditorState)}
+              />
+            </div>
+          </div>
         )}
         <div className="journal-buttons">
-          {!isEditing && <button onClick={() => setIsEditing(true)} className="edit-button">Add/Modify</button>}
-          {isEditing && <button onClick={handleSave} className="save-button" disabled={isSaveDisabled}>Save</button>}
-          <button onClick={handleDelete} className="delete-button" disabled={!id}>Delete</button>
+          {!isEditing && (
+            <>
+              <button onClick={() => setIsEditing(true)} className="edit-button">Add/Modify</button>
+              <button onClick={handleDelete} className="delete-button" disabled={!id || originalContent.trim() === ''}>Delete</button>
+            </>
+          )}
+          {isEditing && (
+            <>
+              <button onClick={handleSave} className="save-button" disabled={isSaveDisabled}>Save</button>
+              <button onClick={() => setIsEditing(false)} className="cancel-button">Cancel</button>
+            </>
+          )}
         </div>
       </div>
     </div>
