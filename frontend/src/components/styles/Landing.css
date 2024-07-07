@@ -9,8 +9,18 @@
 }
 
 .landing-title {
+  display: flex;
+  align-items: flex-end;  /* Align items at the bottom */
   font-size: 50px;
+  font-weight: bold;
   margin-bottom: 20px;
+}
+
+.landing-icon {
+  width: 55px;  /* Adjust the size as needed */
+  height: 50px;
+  margin-left: 10px;  /* Space between the title and the icon */
+  margin-bottom: 5px;
 }
 
 .landing-buttons {

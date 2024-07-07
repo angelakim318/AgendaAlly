@@ -5,7 +5,10 @@ import './styles/Landing.css';
 const Landing = () => {
   return (
     <div className="landing-container">
-      <h1 className="landing-title">AgendaAlly</h1>
+      <div className="landing-title">
+        <span>AgendaAlly</span>
+        <img src="/icons/notebook.png" alt="Cute Notebook" className="landing-icon" />
+      </div>
       <div className="landing-buttons">
         <Link to="/login">
           <button className="landing-button">Login</button>
