@@ -37,7 +37,10 @@ const Login = ({ setUser }) => {
   return (
     <div className="login-page">
       <div className="header">
-        <div className="title">AgendaAlly</div>
+        <div className="title">
+          <span>AgendaAlly</span>
+          <img src="/icons/notebook.png" alt="Cute Notebook" className="header-icon" />
+        </div>
       </div>
       <div className="login-container">
         <h2>Login</h2>

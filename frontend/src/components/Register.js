@@ -31,7 +31,10 @@ const Register = () => {
   return (
     <div className="register-page">
       <div className="header">
-        <div className="title">AgendaAlly</div>
+        <div className="title">
+          <span>AgendaAlly</span>
+          <img src="/icons/notebook.png" alt="Cute Notebook" className="header-icon" />
+        </div>
       </div>
       <div className="register-container">
         <h2>Register</h2>

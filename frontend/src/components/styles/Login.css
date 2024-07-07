@@ -12,8 +12,17 @@
 }
 
 .title {
+  display: flex;
+  align-items: flex-end; 
   font-size: 30px;
   font-weight: bold;
+}
+
+.header-icon {
+  width: 30px; 
+  height: 30px;
+  margin-left: 3px; 
+  margin-bottom: 2px; 
 }
 
 .login-page {
