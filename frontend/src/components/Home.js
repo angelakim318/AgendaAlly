@@ -56,7 +56,10 @@ const Home = ({ user }) => {
   return (
     <div className="home-container">
       <div className="header">
-        <div className="app-title">AgendaAlly</div>
+        <div className="app-title">
+          <span>AgendaAlly</span>
+          <img src="/icons/notebook.png" alt="Cute Notebook" className="header-icon" />
+        </div>
         <button onClick={handleLogout} className="logout-button">Logout</button>
       </div>
       <div className="welcome-message">

@@ -21,8 +21,16 @@
 }
 
 .app-title {
+  display: flex;
+  align-items: flex-end;  /* Align items at the bottom */
   font-size: 30px;
   font-weight: bold;
+}
+
+.header-icon {
+  width: 30px;  /* Adjust the size as needed */
+  height: 30px;
+  margin-left: 10px;  /* Space between the title and the icon */
 }
 
 .logout-button {
