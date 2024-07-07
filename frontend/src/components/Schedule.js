@@ -72,7 +72,7 @@ const Schedule = ({ user }) => {
   const formattedDate = new Date(date + 'T00:00:00').toLocaleDateString('en-US', {
     weekday: 'long',
     year: 'numeric',
-    month: 'short',
+    month: 'long', // Use 'long' to get the full month name
     day: 'numeric'
   });
 
