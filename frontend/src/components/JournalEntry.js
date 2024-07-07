@@ -137,7 +137,7 @@ const JournalEntry = ({ user }) => {
             {originalContent ? (
               <div dangerouslySetInnerHTML={{ __html: originalContent }} />
             ) : (
-              <p className="journal-placeholder">Add a journal entry...</p>
+              <p className="journal-placeholder">Click on Add/Modify to add a journal entry.</p>
             )}
           </div>
         )}
