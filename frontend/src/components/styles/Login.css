@@ -46,12 +46,13 @@
   box-sizing: border-box;
   border: 1px solid #2abe6a;
   border-radius: 5px;
-  background-color: #ddf3e6;
+  background-color: #f0f9f4;
   margin-top: 20px;
 }
 
 .login-container h2 {
   margin-bottom: 20px;
+  font-weight: 500;
 }
 
 .input-group {
@@ -70,7 +71,7 @@
   padding: 10px;
   border: 1px solid #2abe6a;
   border-radius: 5px;
-  font-size: 13px;
+  font-size: 14px;
   box-sizing: border-box;
 }
 
@@ -101,8 +102,9 @@
 }
 
 .register-link a:hover {
+  color: #333;
   font-weight: bold;
-  border: 1px solid #2aab5c;
+  border: 2px solid #2aab5c;
   padding: 2px 5px;
   border-radius: 3px;
 }

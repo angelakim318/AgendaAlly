@@ -25,7 +25,7 @@
 .calendar-header {
   text-align: center;
   border: 1px solid #2abe6a;
-  background-color: #ddf3e6;
+  background-color: #c2f2d6;
   width: 100%;
   max-width: 1000px;
   box-sizing: border-box;
@@ -70,7 +70,7 @@
 .schedule-link {
   display: block;
   text-decoration: none;
-  color: #2abe6a;
+  color: #333;
 }
 
 .journal-link:hover,
