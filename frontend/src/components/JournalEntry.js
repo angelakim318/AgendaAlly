@@ -121,7 +121,10 @@ const JournalEntry = ({ user }) => {
   return (
     <div className="journal-container">
       <div className="header">
-        <div className="header-title">AgendaAlly</div>
+        <div className="header-title">
+          <span>AgendaAlly</span>
+          <img src="/icons/notebook.png" alt="Cute Notebook" className="header-icon" />
+        </div>
         <div className="header-buttons">
           <button onClick={() => navigate('/home')} className="back-button">Back to Calendar</button>
           <button onClick={() => navigate('/')} className="logout-button">Logout</button>
