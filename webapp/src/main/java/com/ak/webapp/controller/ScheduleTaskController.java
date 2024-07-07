@@ -20,9 +20,10 @@ public class ScheduleTaskController {
     @Autowired
     private ScheduleTaskService scheduleTaskService;
 
-    @PostMapping("/{date}/{time}")
-    public ResponseEntity<ScheduleTask> createOrUpdateTask(@PathVariable String date, @PathVariable String time,
-                                                           @RequestBody String taskContent, Authentication authentication) {
+    @PostMapping("/{date}/{startTime}/{endTime}")
+    public ResponseEntity<ScheduleTask> createOrUpdateTask(@PathVariable String date, @PathVariable String startTime,
+                                                           @PathVariable String endTime, @RequestBody String taskContent,
+                                                           Authentication authentication) {
         if (authentication == null || !authentication.isAuthenticated()) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
@@ -30,9 +31,10 @@ public class ScheduleTaskController {
         String username = userDetails.getUsername();
 
         LocalDate taskDate = LocalDate.parse(date);
-        LocalTime taskTime = LocalTime.parse(time);
+        LocalTime taskStartTime = LocalTime.parse(startTime);
+        LocalTime taskEndTime = LocalTime.parse(endTime);
 
-        ScheduleTask task = scheduleTaskService.createOrUpdateTask(username, taskDate, taskTime, taskContent);
+        ScheduleTask task = scheduleTaskService.createOrUpdateTask(username, taskDate, taskStartTime, taskEndTime, taskContent);
         return ResponseEntity.ok(task);
     }
 

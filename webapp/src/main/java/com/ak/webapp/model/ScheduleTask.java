@@ -7,7 +7,7 @@ import java.time.LocalTime;
 
 @Entity
 @Table(name = "schedule_tasks", uniqueConstraints = {
-        @UniqueConstraint(columnNames = {"user_id", "date", "time"})
+        @UniqueConstraint(columnNames = {"user_id", "date", "start_time"})
 })
 public class ScheduleTask {
 
@@ -23,18 +23,22 @@ public class ScheduleTask {
     @Column(nullable = false)
     private LocalDate date;
 
-    @Column(nullable = false)
-    private LocalTime time;
+    @Column(name = "start_time", nullable = false)
+    private LocalTime startTime;
+
+    @Column(name = "end_time", nullable = false)
+    private LocalTime endTime;
 
     @Column(nullable = false, columnDefinition = "TEXT")
     private String task;
 
     public ScheduleTask() {}
 
-    public ScheduleTask(User user, LocalDate date, LocalTime time, String task) {
+    public ScheduleTask(User user, LocalDate date, LocalTime startTime, LocalTime endTime, String task) {
         this.user = user;
         this.date = date;
-        this.time = time;
+        this.startTime = startTime;
+        this.endTime = endTime;
         this.task = task;
     }
 
@@ -62,12 +66,20 @@ public class ScheduleTask {
         this.date = date;
     }
 
-    public LocalTime getTime() {
-        return time;
+    public LocalTime getStartTime() {
+        return startTime;
     }
 
-    public void setTime(LocalTime time) {
-        this.time = time;
+    public void setStartTime(LocalTime startTime) {
+        this.startTime = startTime;
+    }
+
+    public LocalTime getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(LocalTime endTime) {
+        this.endTime = endTime;
     }
 
     public String getTask() {

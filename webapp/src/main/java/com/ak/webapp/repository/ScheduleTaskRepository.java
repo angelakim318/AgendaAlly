@@ -12,6 +12,6 @@ import java.util.Optional;
 
 @Repository
 public interface ScheduleTaskRepository extends JpaRepository<ScheduleTask, Long> {
-    Optional<ScheduleTask> findByUserAndDateAndTime(User user, LocalDate date, LocalTime time);
+    Optional<ScheduleTask> findByUserAndDateAndStartTime(User user, LocalDate date, LocalTime startTime);
     List<ScheduleTask> findByUserAndDate(User user, LocalDate date);
 }

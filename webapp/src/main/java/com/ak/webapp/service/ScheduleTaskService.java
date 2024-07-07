@@ -21,17 +21,18 @@ public class ScheduleTaskService {
     @Autowired
     private UserRepository userRepository;
 
-    public ScheduleTask createOrUpdateTask(String username, LocalDate date, LocalTime time, String taskContent) {
+    public ScheduleTask createOrUpdateTask(String username, LocalDate date, LocalTime startTime, LocalTime endTime, String taskContent) {
         Optional<User> userOpt = userRepository.findByUsername(username);
         if (userOpt.isPresent()) {
             User user = userOpt.get();
-            Optional<ScheduleTask> existingTaskOpt = scheduleTaskRepository.findByUserAndDateAndTime(user, date, time);
+            Optional<ScheduleTask> existingTaskOpt = scheduleTaskRepository.findByUserAndDateAndStartTime(user, date, startTime);
             ScheduleTask task;
             if (existingTaskOpt.isPresent()) {
                 task = existingTaskOpt.get();
                 task.setTask(taskContent);
+                task.setEndTime(endTime);
             } else {
-                task = new ScheduleTask(user, date, time, taskContent);
+                task = new ScheduleTask(user, date, startTime, endTime, taskContent);
             }
             return scheduleTaskRepository.save(task);
         } else {
