@@ -68,7 +68,7 @@
   font-weight: bold;
   text-align: center;
   padding: 10px;
-  background-color: #a0e5be;
+  background-color: #c2f2d6;
   width: 100%;
   border: 1px solid #2abe6a;
   margin-bottom: 0;
@@ -111,13 +111,13 @@
 .schedule-link {
   display: block;
   text-decoration: none;
-  color: #2aab5c;
+  color: #333;
 }
 
 .journal-link:hover,
 .schedule-link:hover {
   font-weight: bold;
-  border: 1px solid #2aab5c;
+  border: 2px solid #2aab5c;
   padding: 2px 5px;
   border-radius: 3px;
 }

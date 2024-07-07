@@ -68,7 +68,7 @@
 }
 
 .schedule-title {
-  font-weight: bold;
+  font-weight: 500;
   font-size: 24px;
   text-align: center;
   padding: 10px;
@@ -105,10 +105,11 @@
 }
 
 .schedule-time {
-  background-color: #a0e5be;
+  background-color: #a4e6c1;
   padding: 10px;
   text-align: center;
   border: 1px solid #2abe6a;
+  color: #333;
 }
 
 .schedule-task {
@@ -116,6 +117,7 @@
   padding: 10px;
   border: 1px solid #2abe6a;
   cursor: pointer;
+  color: #333;
 }
 
 .schedule-task:hover {
@@ -127,7 +129,7 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background-color: #ddf3e6;
+  background-color: #e7f8ee;
   padding: 20px;
   border: 1px solid #2abe6a;
   border-radius: 5px;
@@ -141,6 +143,7 @@
   text-align: center;
   margin-bottom: 10px;
   margin-top: 0;
+  color: #333;
 }
 
 .task-textarea {
