@@ -9,7 +9,6 @@ const Home = ({ user }) => {
   const [firstName, setFirstName] = useState('');
   const [currentDate, setCurrentDate] = useState(new Date());
   const navigate = useNavigate();
-  const wavingHandEmoji = '\u{1F44B}';
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -63,7 +62,7 @@ const Home = ({ user }) => {
         <button onClick={handleLogout} className="logout-button">Logout</button>
       </div>
       <div className="welcome-message">
-        Welcome, {firstName} {wavingHandEmoji}
+        Welcome,  {firstName} <img src="/icons/sunny.png" alt="Sun Icon" className="welcome-icon" />
       </div>
       <div className="calendar-nav-buttons">
         <button onClick={goToPreviousMonth} className="nav-button">Previous Month</button>

@@ -114,7 +114,7 @@ const JournalEntry = ({ user }) => {
   const formattedDate = new Date(date + 'T00:00:00').toLocaleDateString('en-US', {
     weekday: 'long',
     year: 'numeric',
-    month: 'short',
+    month: 'long', // Changed from 'short' to 'long' to get the full month name
     day: 'numeric'
   });
 

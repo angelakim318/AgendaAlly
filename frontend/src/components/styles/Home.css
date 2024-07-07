@@ -28,13 +28,13 @@
 }
 
 .header-icon {
-  width: 30px;  /* Adjust the size as needed */
-  height: 30px;
-  margin-left: 10px;  /* Space between the title and the icon */
+  width: 55px;  /* Adjust the size as needed */
+  height: 55px;
+  margin-left: 5px;  /* Space between the title and the icon */
 }
 
 .logout-button {
-  font-size: 13px;
+  font-size: 14px;
   background-color: #2abe6a;
   color: white;
   border: none;
@@ -51,7 +51,15 @@
 .welcome-message {
   font-size: 30px;
   text-align: center;
-  font-weight: bold;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 10px;  /* Adjust gap between text and icon */
+}
+
+.welcome-icon {
+  width: 55px;  /* Adjust the size as needed */
+  height: 55px;
 }
 
 .calendar-container {
@@ -76,6 +84,7 @@
 
 .calendar-header h2 {
   margin: 0;
+  font-size: 17px;
 }
 
 .calendar-nav-buttons {
@@ -83,6 +92,7 @@
   justify-content: center;
   width: 100%;
   margin-bottom: 0;
+  font-size: 14px;
 }
 
 .calendar-grid {
@@ -138,7 +148,7 @@
   cursor: pointer;
   border-radius: 5px;
   margin: 0 10px;
-  font-size: 13px;
+  font-size: 14px;
 }
 
 .nav-button:hover {
