@@ -87,7 +87,10 @@ const Schedule = ({ user }) => {
   return (
     <div className="schedule-container">
       <div className="header">
-        <div className="header-title">AgendaAlly</div>
+        <div className="header-title">
+          <span>AgendaAlly</span>
+          <img src="/icons/notebook.png" alt="Cute Notebook" className="header-icon" />
+        </div>
         <div className="header-buttons">
           <button onClick={() => navigate('/home')} className="back-button">Back to Calendar</button>
           <button onClick={() => navigate('/')} className="logout-button">Logout</button>
@@ -95,6 +98,7 @@ const Schedule = ({ user }) => {
       </div>
       <div className="content">
         <h1 className="schedule-title">Schedule for {formattedDate}</h1>
+        <p className="instruction-text">Click next to a time to add a task. You can add, modify, or remove a task anytime.</p>
         <div className="schedule-grid">
           {[...Array(24).keys()].map(hour => {
             const task = tasks.find(task => task.time === `${hour.toString().padStart(2, '0')}:00:00`);
