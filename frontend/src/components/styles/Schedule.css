@@ -52,6 +52,7 @@
   display: flex;
   align-items: center;
   justify-content: center; 
+  font-size: 14px;
 }
 
 .logout-button:hover, .back-button:hover {
@@ -130,7 +131,10 @@
   left: 50%;
   transform: translate(-50%, -50%);
   background-color: #e7f8ee;
-  padding: 20px;
+  padding: 25px; /* Adjusted padding */
+  width: 60%; /* Adjusted width */
+  max-width: 450px; /* Max width */
+  height: 45%; /* Adjusted height */
   border: 1px solid #2abe6a;
   border-radius: 5px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -148,31 +152,31 @@
 
 .task-textarea {
   width: 100%;
-  height: 100px;
+  height: 60%; /* Adjusted height */
   padding: 10px;
   border: 1px solid #2abe6a;
   border-radius: 5px;
   box-sizing: border-box;
   margin-bottom: 20px;
   resize: none; 
-  font-size: 13px;
+  font-size: 15px;
 }
 
 .modal-buttons {
   display: flex;
-  justify-content: space-between;
-  gap: 10px; 
+  justify-content: center; /* Center the buttons */
+  gap: 5px; /* Reduced gap between buttons */
 }
 
 .save-button, .delete-button, .close-button {
   background-color: #2abe6a;
   color: white;
   border: none;
-  padding: 10px 20px; 
+  padding: 10px 15px; /* Adjusted padding */
   cursor: pointer;
   border-radius: 5px;
   margin: 10px 0; 
-  font-size: 13px;
+  font-size: 14px;
 }
 
 .save-button:hover, .delete-button:hover, .close-button:hover {

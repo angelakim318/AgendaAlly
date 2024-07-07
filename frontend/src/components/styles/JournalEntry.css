@@ -43,7 +43,7 @@
 
 .logout-button, .back-button {
   background-color: #2abe6a;
-  font-size: 13px;
+  font-size: 14px;
   color: white;
   border: none;
   padding: 10px 20px;
@@ -149,7 +149,7 @@
   cursor: pointer;
   border-radius: 5px;
   margin: 10px 0;
-  font-size: 13px;
+  font-size: 14px;
 }
 
 .save-button:hover, .delete-button:hover, .edit-button:hover, .cancel-button:hover {
