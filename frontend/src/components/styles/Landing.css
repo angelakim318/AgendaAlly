@@ -19,7 +19,7 @@
 }
 
 .landing-button {
-  background-color: #307ad5;
+  background-color: #2abe6a;
   color: white;
   border: none;
   padding: 10px 20px;
@@ -29,5 +29,5 @@
 }
 
 .landing-button:hover {
-  background-color: #135cb5;
+  background-color: #2aab5c;
 }

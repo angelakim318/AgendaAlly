@@ -4,9 +4,9 @@
   align-items: center;
   width: 100%;
   padding: 20px;
-  background-color: #f5f5f5;
-  border-bottom: 1px solid #ddd;
-  border: 1px solid #ddd;
+  background-color: #ddf3e6;
+  border-bottom: 1px solid #2abe6a;
+  border: 1px solid #2abe6a;
   max-width: 1200px;
   margin: 20px auto; 
 }
@@ -35,9 +35,9 @@
   max-width: 400px;
   padding: 20px;
   box-sizing: border-box;
-  border: 1px solid #ddd;
+  border: 1px solid #2abe6a;
   border-radius: 5px;
-  background-color: #f9f9f9;
+  background-color: #ddf3e6;
   margin-top: 20px;
 }
 
@@ -59,14 +59,14 @@
 .input-group input {
   width: 100%;
   padding: 10px;
-  border: 1px solid #ddd;
+  border: 1px solid #2abe6a;
   border-radius: 5px;
   font-size: 13px;
   box-sizing: border-box;
 }
 
 .login-container button {
-  background-color: #307ad5;
+  background-color: #2abe6a;
   color: white;
   border: none;
   padding: 10px 20px;
@@ -77,7 +77,7 @@
 }
 
 .login-container button:hover {
-  background-color: #135cb5;
+  background-color: #2aab5c;
   font-weight: bold;
 }
 
@@ -87,13 +87,13 @@
 }
 
 .register-link a {
-  color: #d88ec6;
+  color: #2aab5c;
   text-decoration: none;
 }
 
 .register-link a:hover {
   font-weight: bold;
-  border: 1px solid #d88ec6;
+  border: 1px solid #2aab5c;
   padding: 2px 5px;
   border-radius: 3px;
 }

@@ -11,8 +11,8 @@
 
 .calendar-title {
   text-align: center;
-  border: 1px solid #ddd;
-  background-color: #f5f5f5;
+  border: 1px solid #2abe6a;
+  background-color: #ddf3e6;
   width: 100%;
   max-width: 1000px;
   box-sizing: border-box;
@@ -24,8 +24,8 @@
 
 .calendar-header {
   text-align: center;
-  border: 1px solid #ddd;
-  background-color: #f5f5f5;
+  border: 1px solid #2abe6a;
+  background-color: #ddf3e6;
   width: 100%;
   max-width: 1000px;
   box-sizing: border-box;
@@ -70,7 +70,7 @@
 .schedule-link {
   display: block;
   text-decoration: none;
-  color: #e361c0;
+  color: #2abe6a;
 }
 
 .journal-link:hover,
@@ -83,11 +83,11 @@
 }
 
 .current-day {
-  background-color: #7ca6d8;
+  background-color: #ddf3e6;
 }
 
 .nav-button {
-  background-color: #f4c8e9;
+  background-color: #2abe6a;
   color: white;
   border: none;
   padding: 10px;
@@ -97,7 +97,7 @@
 }
 
 .nav-button:hover {
-  background-color: #135cb5;
+  background-color: #2aab5c;
 }
 
 .current-month-button {
