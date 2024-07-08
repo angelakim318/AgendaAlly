@@ -99,6 +99,7 @@
   grid-template-columns: 100px 1fr;
   gap: 1px;
   background-color: #a0e5be;
+  grid-auto-rows: 50px; /* Adjust row height as needed */
 }
 
 .schedule-row {
@@ -123,6 +124,18 @@
 
 .schedule-task:hover {
   background-color: #ddf3e6;
+}
+
+.task-block {
+  background-color: #c2f2d6; /* Different background for blocked tasks */
+  padding: 10px;
+  border: 1px solid #2abe6a;
+  cursor: pointer;
+  color: #333;
+  grid-column: 2; /* Ensure the task block stays in the second column */
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .task-modal {
@@ -160,6 +173,21 @@
   margin-bottom: 20px;
   resize: none; 
   font-size: 15px;
+}
+
+.time-inputs {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.time-input {
+  width: 45%;
+  padding: 5px;
+  border: 1px solid #2abe6a;
+  border-radius: 5px;
+  box-sizing: border-box;
+  font-size: 14px;
 }
 
 .modal-buttons {
