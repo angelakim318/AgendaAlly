@@ -1,11 +1,13 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import './styles/Schedule.css';
 
 const Schedule = ({ user }) => {
   const { date } = useParams();
   const [tasks, setTasks] = useState([]);
+  const [newTask, setNewTask] = useState({ content: '', startTime: '', endTime: '' });
   const [selectedTask, setSelectedTask] = useState({ id: null, content: '', startTime: '', endTime: '' });
   const [isSaveDisabled, setIsSaveDisabled] = useState(true);
   const [isDeleteDisabled, setIsDeleteDisabled] = useState(true);
@@ -25,15 +27,52 @@ const Schedule = ({ user }) => {
     fetchTasks();
   }, [fetchTasks]);
 
+  const generateTimeOptions = () => {
+    const times = [];
+    for (let hour = 0; hour < 24; hour++) {
+      for (let minutes = 0; minutes < 60; minutes += 15) {
+        const timeString = `${hour.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
+        times.push(timeString);
+      }
+    }
+    return times;
+  };
+
   const handleTaskChange = (field, value) => {
-    setSelectedTask({ ...selectedTask, [field]: value });
-    const { startTime, endTime, content } = selectedTask;
+    if (selectedTask.id) {
+      setSelectedTask({ ...selectedTask, [field]: value });
+    } else {
+      setNewTask({ ...newTask, [field]: value });
+    }
+    const { startTime, endTime, content } = selectedTask.id ? selectedTask : newTask;
     setIsSaveDisabled(
       content.trim() === '' ||
       startTime.trim() === '' ||
       endTime.trim() === '' ||
       new Date(`1970-01-01T${endTime}`) <= new Date(`1970-01-01T${startTime}`)
     );
+  };
+
+  const handleAddTask = async () => {
+    try {
+      const response = await axios.post(
+        `http://localhost:8080/api/schedule/${date}/${newTask.startTime}/${newTask.endTime}`,
+        newTask.content,
+        {
+          headers: {
+            'Content-Type': 'text/plain'
+          },
+          withCredentials: true
+        }
+      );
+      const updatedTask = response.data;
+      console.log('Added task:', updatedTask);
+      await fetchTasks(); // Fetch tasks again after saving
+      setNewTask({ content: '', startTime: '', endTime: '' });
+      setIsSaveDisabled(true);
+    } catch (error) {
+      console.error('Error adding schedule task', error);
+    }
   };
 
   const handleSave = async () => {
@@ -87,7 +126,7 @@ const Schedule = ({ user }) => {
   });
 
   const formatTime = (time) => {
-    const [hour, minute] = time.split(':'); // Removed second
+    const [hour, minute] = time.split(':');
     const hourInt = parseInt(hour, 10);
     const period = hourInt < 12 ? 'AM' : 'PM';
     const formattedHour = hourInt % 12 === 0 ? 12 : hourInt % 12;
@@ -96,9 +135,19 @@ const Schedule = ({ user }) => {
 
   const calculateGridRowSpan = (startTime, endTime) => {
     const startHour = parseInt(startTime.split(':')[0], 10);
+    const startMinutes = parseInt(startTime.split(':')[1], 10);
     const endHour = parseInt(endTime.split(':')[0], 10);
-    return endHour - startHour;
+    const endMinutes = parseInt(endTime.split(':')[1], 10);
+    return (endHour * 60 + endMinutes - startHour * 60 - startMinutes) / 15;
   };
+
+  const calculateTopOffset = (startTime) => {
+    const startHour = parseInt(startTime.split(':')[0], 10);
+    const startMinutes = parseInt(startTime.split(':')[1], 10);
+    return (startHour * 60 + startMinutes) / 15 * 20; // Each 15 minutes is 20px tall
+  };
+
+  const timeOptions = generateTimeOptions();
 
   return (
     <div className="schedule-container">
@@ -114,40 +163,86 @@ const Schedule = ({ user }) => {
       </div>
       <div className="content">
         <h1 className="schedule-title">Schedule for {formattedDate}</h1>
-        <p className="instruction-text">Click next to a time to add a task. You can add, modify, or remove a task anytime.</p>
+        <p className="instruction-text">Add a new task:</p>
+        <div className="row mb-3">
+          <div className="col-3">
+            <select
+              value={newTask.startTime}
+              onChange={(e) => handleTaskChange('startTime', e.target.value)}
+              className="form-control"
+            >
+              <option value="">Start Time</option>
+              {timeOptions.map(time => (
+                <option key={time} value={time}>{time}</option>
+              ))}
+            </select>
+          </div>
+          <div className="col-3">
+            <select
+              value={newTask.endTime}
+              onChange={(e) => handleTaskChange('endTime', e.target.value)}
+              className="form-control"
+            >
+              <option value="">End Time</option>
+              {timeOptions.map(time => (
+                <option key={time} value={time}>{time}</option>
+              ))}
+            </select>
+          </div>
+          <div className="col-4">
+            <input
+              type="text"
+              value={newTask.content}
+              onChange={(e) => handleTaskChange('content', e.target.value)}
+              className="form-control"
+              placeholder="Task Description"
+            />
+          </div>
+          <div className="col-2">
+            <button onClick={handleAddTask} className="btn btn-primary" disabled={isSaveDisabled}>Add Task</button>
+          </div>
+        </div>
         <div className="schedule-grid">
-          {[...Array(24).keys()].map(hour => {
-            const task = tasks.find(t => {
-              const taskStartHour = parseInt(t.startTime.split(':')[0], 10);
-              const taskEndHour = parseInt(t.endTime.split(':')[0], 10);
-              return taskStartHour <= hour && hour < taskEndHour;
-            });
-            return (
-              <div key={hour} className="schedule-row">
-                <div className="schedule-time">{formatTime(`${hour.toString().padStart(2, '0')}:00:00`)}</div>
-                {task && task.startTime.split(':')[0] === hour.toString().padStart(2, '0') ? (
-                  <div
-                    className="schedule-task task-block"
-                    onClick={() => {
-                      setSelectedTask({
-                        id: task?.id || null,
-                        startTime: task?.startTime || `${hour.toString().padStart(2, '0')}:00:00`,
-                        endTime: task?.endTime || `${hour.toString().padStart(2, '0')}:00:00`,
-                        content: task?.task || ''
-                      });
-                      setIsSaveDisabled(task ? task.task.trim() === '' : true);
-                      setIsDeleteDisabled(!task || !task.id);
-                    }}
-                    style={task ? { gridRow: `span ${calculateGridRowSpan(task.startTime, task.endTime)}` } : {}}
-                  >
-                    {task?.task || ''}
-                  </div>
-                ) : (
-                  <div className="schedule-task" />
-                )}
+          <div className="schedule-times">
+            {[...Array(24).keys()].map(hour => (
+              <div key={hour} className="schedule-time">
+                {formatTime(`${hour.toString().padStart(2, '0')}:00:00`)}
+                {[...Array(3).keys()].map(index => (
+                  <div key={index} className="time-divider"></div>
+                ))}
               </div>
-            );
-          })}
+            ))}
+          </div>
+          <div className="schedule-tasks">
+            {[...Array(24 * 4).keys()].map(index => (
+              <div key={index} className="schedule-task-container">
+                <div className="schedule-task" />
+              </div>
+            ))}
+            {tasks.map(task => (
+              <div
+                key={task.id}
+                className="task-block"
+                style={{
+                  height: `${calculateGridRowSpan(task.startTime, task.endTime) * 20}px`,
+                  top: `${calculateTopOffset(task.startTime)}px`
+                }}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setSelectedTask({
+                    id: task.id,
+                    startTime: task.startTime,
+                    endTime: task.endTime,
+                    content: task.task
+                  });
+                  setIsSaveDisabled(false);
+                  setIsDeleteDisabled(false);
+                }}
+              >
+                {task.task}
+              </div>
+            ))}
+          </div>
         </div>
       </div>
       {selectedTask.startTime && (

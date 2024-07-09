@@ -30,15 +30,15 @@
 
 .header-title {
   display: flex;
-  align-items: flex-end;  /* Align items at the bottom */
+  align-items: flex-end;
   font-size: 30px;
   font-weight: bold;
 }
 
 .header-icon {
-  width: 30px;  /* Adjust the size as needed */
+  width: 30px;
   height: 30px;
-  margin-left: 10px;  /* Space between the title and the icon */
+  margin-left: 10px;
 }
 
 .logout-button, .back-button {
@@ -48,10 +48,10 @@
   padding: 10px 20px;
   cursor: pointer;
   border-radius: 5px;
-  height: 40px; 
+  height: 40px;
   display: flex;
   align-items: center;
-  justify-content: center; 
+  justify-content: center;
   font-size: 14px;
 }
 
@@ -62,7 +62,7 @@
 
 .content {
   width: 100%;
-  max-width: 1000px; 
+  max-width: 1000px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -76,7 +76,7 @@
   border: 1px solid #2abe6a;
   background-color: #ddf3e6;
   width: 100%;
-  max-width: 1000px; 
+  max-width: 1000px;
   box-sizing: border-box;
   display: flex;
   justify-content: center;
@@ -93,33 +93,50 @@
 }
 
 .schedule-grid {
+  display: flex;
   width: 100%;
-  max-width: 1000px; 
-  display: grid;
-  grid-template-columns: 100px 1fr;
-  gap: 1px;
-  background-color: #a0e5be;
-  grid-auto-rows: 50px; /* Adjust row height as needed */
+  max-width: 1000px;
+  margin-top: 20px;
+  position: relative;
 }
 
-.schedule-row {
-  display: contents;
+.schedule-times {
+  display: flex;
+  flex-direction: column;
+  width: 20%; /* Adjusted width */
+}
+
+.schedule-tasks {
+  display: flex;
+  flex-direction: column;
+  width: 80%; /* Adjusted width */
+  position: relative;
+}
+
+.schedule-time, .schedule-task-container {
+  height: 80px; /* Each hour divided into four 20px sections */
+  border: 1px solid #2abe6a;
+  display: flex;
+  flex-direction: column;
 }
 
 .schedule-time {
   background-color: #a4e6c1;
-  padding: 10px;
-  text-align: center;
-  border: 1px solid #2abe6a;
   color: #333;
+  justify-content: center;
+}
+
+.time-divider {
+  flex: 1;
+  border-top: 1px solid #2abe6a;
 }
 
 .schedule-task {
   background-color: #ffff;
-  padding: 10px;
-  border: 1px solid #2abe6a;
   cursor: pointer;
   color: #333;
+  width: 100%;
+  height: 100%; /* Ensure it spans the full height */
 }
 
 .schedule-task:hover {
@@ -132,10 +149,12 @@
   border: 1px solid #2abe6a;
   cursor: pointer;
   color: #333;
-  grid-column: 2; /* Ensure the task block stays in the second column */
   display: flex;
   align-items: center;
   justify-content: center;
+  position: absolute; /* Position absolute to align within the grid */
+  width: 100%;
+  left: 0;
 }
 
 .task-modal {
@@ -144,10 +163,10 @@
   left: 50%;
   transform: translate(-50%, -50%);
   background-color: #e7f8ee;
-  padding: 25px; /* Adjusted padding */
-  width: 60%; /* Adjusted width */
-  max-width: 450px; /* Max width */
-  height: 45%; /* Adjusted height */
+  padding: 25px;
+  width: 60%;
+  max-width: 450px;
+  height: 45%;
   border: 1px solid #2abe6a;
   border-radius: 5px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -165,13 +184,13 @@
 
 .task-textarea {
   width: 100%;
-  height: 60%; /* Adjusted height */
+  height: 60%;
   padding: 10px;
   border: 1px solid #2abe6a;
   border-radius: 5px;
   box-sizing: border-box;
   margin-bottom: 20px;
-  resize: none; 
+  resize: none;
   font-size: 15px;
 }
 
@@ -192,18 +211,18 @@
 
 .modal-buttons {
   display: flex;
-  justify-content: center; /* Center the buttons */
-  gap: 5px; /* Reduced gap between buttons */
+  justify-content: center;
+  gap: 5px;
 }
 
 .save-button, .delete-button, .close-button {
   background-color: #2abe6a;
   color: white;
   border: none;
-  padding: 10px 15px; /* Adjusted padding */
+  padding: 10px 15px;
   cursor: pointer;
   border-radius: 5px;
-  margin: 10px 0; 
+  margin: 10px 0;
   font-size: 14px;
 }
 
@@ -217,10 +236,10 @@
 .close-button:disabled,
 .logout-button:disabled,
 .back-button:disabled {
-  background-color: #ccc; /* Grey background */
-  color: #777; /* Light grey text */
-  cursor: not-allowed; /* Not-allowed cursor */
-  font-weight: normal; /* Normal font-weight */
+  background-color: #ccc;
+  color: #777;
+  cursor: not-allowed;
+  font-weight: normal;
 }
 
 .save-button:not(:disabled):hover,
