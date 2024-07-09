@@ -93,54 +93,45 @@
 }
 
 .schedule-grid {
-  display: flex;
   width: 100%;
   max-width: 1000px;
-  margin-top: 20px;
-  position: relative;
+  display: flex;
 }
 
 .schedule-times {
   display: flex;
   flex-direction: column;
-  width: 20%; /* Adjusted width */
-}
-
-.schedule-tasks {
-  display: flex;
-  flex-direction: column;
-  width: 80%; /* Adjusted width */
-  position: relative;
-}
-
-.schedule-time, .schedule-task-container {
-  height: 80px; /* Each hour divided into four 20px sections */
-  border: 1px solid #2abe6a;
-  display: flex;
-  flex-direction: column;
 }
 
 .schedule-time {
+  height: 80px; /* Adjusted height to accommodate four 20px sections (15-minute increments) */
   background-color: #a4e6c1;
+  padding: 10px;
+  text-align: center;
+  border: 1px solid #2abe6a;
   color: #333;
-  justify-content: center;
+  position: relative;
 }
 
 .time-divider {
+  height: 20px; /* Each 15-minute increment is 20px tall */
+  border-bottom: 1px solid #2abe6a;
+}
+
+.schedule-tasks {
   flex: 1;
-  border-top: 1px solid #2abe6a;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.schedule-task-container {
+  height: 20px; /* Each 15-minute increment is 20px tall */
+  border-bottom: 1px solid #2abe6a;
 }
 
 .schedule-task {
-  background-color: #ffff;
-  cursor: pointer;
-  color: #333;
-  width: 100%;
-  height: 100%; /* Ensure it spans the full height */
-}
-
-.schedule-task:hover {
-  background-color: #ddf3e6;
+  height: 100%;
 }
 
 .task-block {
@@ -149,12 +140,8 @@
   border: 1px solid #2abe6a;
   cursor: pointer;
   color: #333;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: absolute; /* Position absolute to align within the grid */
-  width: 100%;
-  left: 0;
+  position: absolute;
+  width: 100%; /* Ensure the task block spans the full width of the schedule-tasks container */
 }
 
 .task-modal {
