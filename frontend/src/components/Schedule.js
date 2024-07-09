@@ -251,21 +251,27 @@ const Schedule = ({ user }) => {
           <div className="time-inputs">
             <label>
               Start Time:
-              <input
-                type="time"
+              <select
                 value={selectedTask.startTime}
                 onChange={(e) => handleTaskChange('startTime', e.target.value)}
-                className="time-input"
-              />
+                className="form-control"
+              >
+                {timeOptions.map(time => (
+                  <option key={time} value={time}>{time}</option>
+                ))}
+              </select>
             </label>
             <label>
               End Time:
-              <input
-                type="time"
+              <select
                 value={selectedTask.endTime}
                 onChange={(e) => handleTaskChange('endTime', e.target.value)}
-                className="time-input"
-              />
+                className="form-control"
+              >
+                {timeOptions.map(time => (
+                  <option key={time} value={time}>{time}</option>
+                ))}
+              </select>
             </label>
           </div>
           <textarea
