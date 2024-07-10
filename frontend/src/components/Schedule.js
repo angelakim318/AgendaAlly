@@ -60,10 +60,10 @@ const Schedule = ({ user }) => {
     try {
       const response = await axios.put(
         `http://localhost:8080/api/schedule/${selectedTask.id}`,
-        selectedTask.task, // Send the task description directly
+        { task: selectedTask.task },
         {
           headers: {
-            'Content-Type': 'text/plain' // Set the content type to text/plain
+            'Content-Type': 'application/json'
           },
           withCredentials: true
         }
@@ -212,9 +212,11 @@ const Schedule = ({ user }) => {
             value={selectedTask.task}
             onChange={(e) => setSelectedTask({ ...selectedTask, task: e.target.value })}
           />
-          <button className="btn btn-primary" onClick={handleSave}>Save</button>
-          <button className="btn btn-danger" onClick={handleDelete}>Delete</button>
-          <button className="btn btn-secondary" onClick={() => setSelectedTask(null)}>Close</button>
+          <div className="modal-button-container">
+            <button className="modal-btn" onClick={handleSave}>Save</button>
+            <button className="modal-btn btn-danger" onClick={handleDelete}>Delete</button>
+            <button className="modal-btn" onClick={() => setSelectedTask(null)}>Close</button>
+          </div>
         </Modal>
       )}
     </div>
