@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/schedule")
@@ -52,7 +53,7 @@ public class ScheduleTaskController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ScheduleTask> updateTask(@PathVariable Long id, @RequestBody String taskDescription,
+    public ResponseEntity<ScheduleTask> updateTask(@PathVariable Long id, @RequestBody Map<String, String> taskDescription,
                                                    Authentication authentication) {
         if (authentication == null || !authentication.isAuthenticated()) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
@@ -60,10 +61,9 @@ public class ScheduleTaskController {
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
         String username = userDetails.getUsername();
 
-        ScheduleTask task = scheduleTaskService.updateTask(id, username, taskDescription);
+        ScheduleTask task = scheduleTaskService.updateTask(id, username, taskDescription.get("description")); // taskDescription should be a plain string
         return ResponseEntity.ok(task);
     }
-
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteTask(@PathVariable Long id, Authentication authentication) {
