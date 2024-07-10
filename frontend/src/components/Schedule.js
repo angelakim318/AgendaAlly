@@ -1,12 +1,16 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import Modal from 'react-modal';
 import './styles/Schedule.css';
+
+Modal.setAppElement('#root'); // Ensure that the modal is correctly registered
 
 const Schedule = ({ user }) => {
   const { date } = useParams();
   const [tasks, setTasks] = useState([]);
   const [newTask, setNewTask] = useState({ startTime: '', endTime: '', description: '' });
+  const [selectedTask, setSelectedTask] = useState(null);
   const navigate = useNavigate();
 
   const fetchTasks = useCallback(async () => {
@@ -48,6 +52,46 @@ const Schedule = ({ user }) => {
     }
   };
 
+  const handleTaskClick = (task) => {
+    setSelectedTask(task);
+  };
+
+  const handleSave = async () => {
+    try {
+      const response = await axios.put(
+        `http://localhost:8080/api/schedule/${selectedTask.date}/${selectedTask.startTime}/${selectedTask.endTime}`,
+        { task: selectedTask.task },
+        {
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          withCredentials: true
+        }
+      );
+      console.log('Modified task:', response.data);
+      await fetchTasks(); // Fetch tasks again after modifying
+      setSelectedTask(null); // Close the modal
+    } catch (error) {
+      console.error('Error modifying schedule task', error);
+    }
+  };
+
+  const handleDelete = async () => {
+    try {
+      const response = await axios.delete(
+        `http://localhost:8080/api/schedule/${selectedTask.date}/${selectedTask.startTime}/${selectedTask.endTime}`,
+        {
+          withCredentials: true
+        }
+      );
+      console.log('Deleted task:', response.data);
+      await fetchTasks(); // Fetch tasks again after deleting
+      setSelectedTask(null); // Close the modal
+    } catch (error) {
+      console.error('Error deleting schedule task', error);
+    }
+  };
+
   const formatTime = (time) => {
     const [hour, minute] = time.split(':');
     const hourInt = parseInt(hour, 10);
@@ -61,6 +105,19 @@ const Schedule = ({ user }) => {
     const minute = String((i % 4) * 15).padStart(2, '0');
     return `${hour}:${minute}`;
   });
+
+  const calculateRowSpan = (startTime, endTime) => {
+    const [startHour, startMinute] = startTime.split(':').map(Number);
+    const [endHour, endMinute] = endTime.split(':').map(Number);
+    const startTotalMinutes = startHour * 60 + startMinute;
+    const endTotalMinutes = endHour * 60 + endMinute;
+    return (endTotalMinutes - startTotalMinutes) / 15;
+  };
+
+  const getGridRowStart = (time) => {
+    const [hour, minute] = time.split(':').map(Number);
+    return hour * 4 + Math.floor(minute / 15) + 1;
+  };
 
   return (
     <div className="schedule-container">
@@ -84,7 +141,7 @@ const Schedule = ({ user }) => {
         <p className="instruction-text">Add a new task:</p>
         <div className="add-task-form">
           <select
-            className="form-control"
+            className="form-control time-select"
             value={newTask.startTime}
             onChange={(e) => handleTaskChange('startTime', e.target.value)}
           >
@@ -94,7 +151,7 @@ const Schedule = ({ user }) => {
             ))}
           </select>
           <select
-            className="form-control"
+            className="form-control time-select"
             value={newTask.endTime}
             onChange={(e) => handleTaskChange('endTime', e.target.value)}
           >
@@ -118,21 +175,48 @@ const Schedule = ({ user }) => {
             const minute = (i % 4) * 15;
             const time = `${String(hour).padStart(2, '0')}:${String(minute).padStart(2, '0')}`;
             const task = tasks.find(t => t.startTime <= time && time < t.endTime);
-            return (
-              <div key={time} className="schedule-row">
-                {minute === 0 && (
-                  <div className="schedule-time" rowSpan={4}>
-                    {formatTime(time)}
+            if (task) {
+              const rowSpan = calculateRowSpan(task.startTime, task.endTime);
+              const gridRowStart = getGridRowStart(task.startTime);
+              return (
+                <div key={task.id} className="schedule-row task-block" style={{ gridRowStart: gridRowStart, gridRowEnd: `span ${rowSpan}` }} onClick={() => handleTaskClick(task)}>
+                  <div className="schedule-task">
+                    {task.task}
                   </div>
-                )}
-                <div className={`schedule-task ${task ? 'task-block' : ''}`}>
-                  {task?.task || ''}
                 </div>
-              </div>
-            );
+              );
+            } else {
+              return (
+                <div key={time} className="schedule-row">
+                  {minute === 0 && (
+                    <div className="schedule-time">
+                      {formatTime(time)}
+                    </div>
+                  )}
+                  <div className="schedule-task"></div>
+                </div>
+              );
+            }
           })}
         </div>
       </div>
+      {selectedTask && (
+        <Modal
+          isOpen={!!selectedTask}
+          onRequestClose={() => setSelectedTask(null)}
+          className="modal-content"
+          overlayClassName="modal-overlay"
+        >
+          <h2>Task from {formatTime(selectedTask.startTime)} to {formatTime(selectedTask.endTime)}</h2>
+          <textarea
+            value={selectedTask.task}
+            onChange={(e) => setSelectedTask({ ...selectedTask, task: e.target.value })}
+          />
+          <button className="btn btn-primary" onClick={handleSave}>Save</button>
+          <button className="btn btn-danger" onClick={handleDelete}>Delete</button>
+          <button className="btn btn-secondary" onClick={() => setSelectedTask(null)}>Close</button>
+        </Modal>
+      )}
     </div>
   );
 };
