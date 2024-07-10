@@ -138,7 +138,7 @@ const Schedule = ({ user }) => {
           month: 'long',
           day: 'numeric'
         })}</h1>
-        <p className="instruction-text">Add a new task:</p>
+        <p className="instruction-text">Add to your schedule:</p>
         <div className="add-task-form">
           <select
             className="form-control time-select"
