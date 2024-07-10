@@ -29,7 +29,17 @@ const Login = ({ setUser }) => {
       setUser(userResponse.data);
       navigate('/home');
     } catch (error) {
-      setError('Login failed. Please try again.');
+      if (error.response) {
+        if (error.response.status === 401) {
+          setError('Invalid username or password.');
+        } else if (error.response.status === 404) {
+          setError('Username not found.');
+        } else {
+          setError('Login failed. Please try again.');
+        }
+      } else {
+        setError('Login failed. Please try again.');
+      }
       console.error('There was an error logging in!', error);
     }
   };
@@ -44,7 +54,11 @@ const Login = ({ setUser }) => {
       </div>
       <div className="login-container">
         <h2>Login</h2>
-        {error && <p className="error-message">{error}</p>}
+        {error && (
+          <div className="custom-alert">
+            <p>{error}</p>
+          </div>
+        )}
         <div className="input-group">
           <label htmlFor="username">Username</label>
           <input
