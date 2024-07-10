@@ -4,7 +4,7 @@ import axios from 'axios';
 import Modal from 'react-modal';
 import './styles/Schedule.css';
 
-Modal.setAppElement('#root'); // Ensure that the modal is correctly registered
+Modal.setAppElement('#root');
 
 const Schedule = ({ user }) => {
   const { date } = useParams();
@@ -16,7 +16,7 @@ const Schedule = ({ user }) => {
   const fetchTasks = useCallback(async () => {
     try {
       const response = await axios.get(`http://localhost:8080/api/schedule/${date}`, { withCredentials: true });
-      setTasks(response.data);
+      setTasks(response.data.sort((a, b) => (a.startTime > b.startTime ? 1 : -1))); // Sort tasks by startTime
       console.log('Fetched tasks:', response.data);
     } catch (error) {
       console.error('Error fetching schedule tasks', error);
@@ -32,6 +32,20 @@ const Schedule = ({ user }) => {
   };
 
   const handleAddTask = async () => {
+    const newTaskStart = new Date(`1970-01-01T${newTask.startTime}:00`);
+    const newTaskEnd = new Date(`1970-01-01T${newTask.endTime}:00`);
+  
+    const isOverlapping = tasks.some(task => {
+      const taskStart = new Date(`1970-01-01T${task.startTime}:00`);
+      const taskEnd = new Date(`1970-01-01T${task.endTime}:00`);
+      return (newTaskStart < taskEnd && newTaskEnd > taskStart);
+    });
+  
+    if (isOverlapping) {
+      alert('The task overlaps with an existing task.');
+      return;
+    }
+  
     try {
       const response = await axios.post(
         `http://localhost:8080/api/schedule/${date}/${newTask.startTime}/${newTask.endTime}`,
@@ -48,7 +62,11 @@ const Schedule = ({ user }) => {
       await fetchTasks(); // Fetch tasks again after adding
       setNewTask({ startTime: '', endTime: '', description: '' });
     } catch (error) {
-      console.error('Error adding schedule task', error);
+      if (error.response && error.response.status === 409) {
+        alert('The task overlaps with an existing task.');
+      } else {
+        console.error('Error adding schedule task', error);
+      }
     }
   };
 
@@ -106,19 +124,6 @@ const Schedule = ({ user }) => {
     return `${hour}:${minute}`;
   });
 
-  const calculateRowSpan = (startTime, endTime) => {
-    const [startHour, startMinute] = startTime.split(':').map(Number);
-    const [endHour, endMinute] = endTime.split(':').map(Number);
-    const startTotalMinutes = startHour * 60 + startMinute;
-    const endTotalMinutes = endHour * 60 + endMinute;
-    return Math.ceil((endTotalMinutes - startTotalMinutes) / 15);
-  };
-
-  const getGridRowStart = (time) => {
-    const [hour, minute] = time.split(':').map(Number);
-    return hour * 4 + Math.floor(minute / 15) + 1;
-  };
-
   return (
     <div className="schedule-container">
       <div className="header">
@@ -169,56 +174,36 @@ const Schedule = ({ user }) => {
           />
           <button className="btn btn-primary" onClick={handleAddTask}>Add Task</button>
         </div>
-        <div className="schedule-grid">
-          {[...Array(96).keys()].map(i => {
-            const hour = Math.floor(i / 4);
-            const minute = (i % 4) * 15;
-            const time = `${String(hour).padStart(2, '0')}:${String(minute).padStart(2, '0')}`;
-            const task = tasks.find(t => t.startTime <= time && time < t.endTime);
-            if (task) {
-              const rowSpan = calculateRowSpan(task.startTime, task.endTime);
-              const gridRowStart = getGridRowStart(task.startTime);
-              return (
-                <div key={`${task.id}-${i}`} className="task-block" style={{ gridRow: `${gridRowStart} / span ${rowSpan}` }} onClick={() => handleTaskClick(task)}>
-                  <div className="schedule-task">
-                    {task.task}
-                  </div>
-                </div>
-              );
-            } else {
-              return (
-                <div key={time} className="schedule-row">
-                  {minute === 0 && (
-                    <div className="schedule-time">
-                      {formatTime(time)}
-                    </div>
-                  )}
-                  <div className="schedule-task"></div>
-                </div>
-              );
-            }
-          })}
+        <div className="task-list">
+          {tasks.map((task) => (
+            <div key={task.id} className="task-item" onClick={() => handleTaskClick(task)}>
+              <div className="task-time">{formatTime(task.startTime)} - {formatTime(task.endTime)}</div>
+              <div className="task-desc">{task.task}</div>
+            </div>
+          ))}
         </div>
       </div>
-      {selectedTask && (
-        <Modal
-          isOpen={!!selectedTask}
-          onRequestClose={() => setSelectedTask(null)}
-          className="modal-content"
-          overlayClassName="modal-overlay"
-        >
-          <h2>Task from {formatTime(selectedTask.startTime)} to {formatTime(selectedTask.endTime)}</h2>
-          <textarea
-            value={selectedTask.task}
-            onChange={(e) => setSelectedTask({ ...selectedTask, task: e.target.value })}
-          />
-          <div className="modal-button-container">
-            <button className="modal-btn" onClick={handleSave}>Save</button>
-            <button className="modal-btn btn-danger" onClick={handleDelete}>Delete</button>
-            <button className="modal-btn" onClick={() => setSelectedTask(null)}>Close</button>
-          </div>
-        </Modal>
-      )}
+      <Modal
+        isOpen={!!selectedTask}
+        onRequestClose={() => setSelectedTask(null)}
+        className="modal-content"
+        overlayClassName="modal-overlay"
+      >
+        {selectedTask && (
+          <>
+            <h2>Task from {formatTime(selectedTask.startTime)} to {formatTime(selectedTask.endTime)}</h2>
+            <textarea
+              value={selectedTask.task}
+              onChange={(e) => setSelectedTask({ ...selectedTask, task: e.target.value })}
+            />
+            <div className="modal-button-container">
+              <button className="modal-btn" onClick={handleSave}>Save</button>
+              <button className="modal-btn btn-danger" onClick={handleDelete}>Delete</button>
+              <button className="modal-btn" onClick={() => setSelectedTask(null)}>Close</button>
+            </div>
+          </>
+        )}
+      </Modal>
     </div>
   );
 };
