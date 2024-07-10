@@ -60,7 +60,7 @@ const Schedule = ({ user }) => {
     try {
       const response = await axios.put(
         `http://localhost:8080/api/schedule/${selectedTask.id}`,
-        { task: selectedTask.task },
+        { description: selectedTask.task }, 
         {
           headers: {
             'Content-Type': 'application/json'
@@ -69,8 +69,8 @@ const Schedule = ({ user }) => {
         }
       );
       console.log('Modified task:', response.data);
-      await fetchTasks(); // Fetch tasks again after modifying
-      setSelectedTask(null); // Close the modal
+      await fetchTasks();
+      setSelectedTask(null); 
     } catch (error) {
       console.error('Error modifying schedule task', error);
     }

@@ -29,10 +29,10 @@ public class ScheduleTaskService {
             ScheduleTask task;
             if (existingTaskOpt.isPresent()) {
                 task = existingTaskOpt.get();
-                task.setTask(taskContent);
+                task.setTask(taskContent); // taskContent should be a plain string
                 task.setEndTime(endTime);
             } else {
-                task = new ScheduleTask(user, date, startTime, endTime, taskContent);
+                task = new ScheduleTask(user, date, startTime, endTime, taskContent); // taskContent should be a plain string
             }
             return scheduleTaskRepository.save(task);
         } else {
@@ -45,7 +45,7 @@ public class ScheduleTaskService {
         if (taskOpt.isPresent()) {
             ScheduleTask task = taskOpt.get();
             if (task.getUser().getUsername().equals(username)) {
-                task.setTask(taskDescription);
+                task.setTask(taskDescription); // taskDescription should be a plain string
                 return scheduleTaskRepository.save(task);
             } else {
                 throw new RuntimeException("Unauthorized");
