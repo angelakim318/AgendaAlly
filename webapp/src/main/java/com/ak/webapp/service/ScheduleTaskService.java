@@ -40,6 +40,21 @@ public class ScheduleTaskService {
         }
     }
 
+    public ScheduleTask updateTask(Long id, String username, String taskDescription) {
+        Optional<ScheduleTask> taskOpt = scheduleTaskRepository.findById(id);
+        if (taskOpt.isPresent()) {
+            ScheduleTask task = taskOpt.get();
+            if (task.getUser().getUsername().equals(username)) {
+                task.setTask(taskDescription);
+                return scheduleTaskRepository.save(task);
+            } else {
+                throw new RuntimeException("Unauthorized");
+            }
+        } else {
+            throw new RuntimeException("Task not found");
+        }
+    }
+
     public List<ScheduleTask> getTasksForDate(String username, LocalDate date) {
         Optional<User> userOpt = userRepository.findByUsername(username);
         if (userOpt.isPresent()) {

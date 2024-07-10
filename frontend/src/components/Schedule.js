@@ -59,11 +59,11 @@ const Schedule = ({ user }) => {
   const handleSave = async () => {
     try {
       const response = await axios.put(
-        `http://localhost:8080/api/schedule/${selectedTask.date}/${selectedTask.startTime}/${selectedTask.endTime}`,
-        { task: selectedTask.task },
+        `http://localhost:8080/api/schedule/${selectedTask.id}`,
+        selectedTask.task, // Send the task description directly
         {
           headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'text/plain' // Set the content type to text/plain
           },
           withCredentials: true
         }
@@ -79,7 +79,7 @@ const Schedule = ({ user }) => {
   const handleDelete = async () => {
     try {
       const response = await axios.delete(
-        `http://localhost:8080/api/schedule/${selectedTask.date}/${selectedTask.startTime}/${selectedTask.endTime}`,
+        `http://localhost:8080/api/schedule/${selectedTask.id}`,
         {
           withCredentials: true
         }
@@ -111,7 +111,7 @@ const Schedule = ({ user }) => {
     const [endHour, endMinute] = endTime.split(':').map(Number);
     const startTotalMinutes = startHour * 60 + startMinute;
     const endTotalMinutes = endHour * 60 + endMinute;
-    return (endTotalMinutes - startTotalMinutes) / 15;
+    return Math.ceil((endTotalMinutes - startTotalMinutes) / 15);
   };
 
   const getGridRowStart = (time) => {
@@ -179,7 +179,7 @@ const Schedule = ({ user }) => {
               const rowSpan = calculateRowSpan(task.startTime, task.endTime);
               const gridRowStart = getGridRowStart(task.startTime);
               return (
-                <div key={task.id} className="schedule-row task-block" style={{ gridRowStart: gridRowStart, gridRowEnd: `span ${rowSpan}` }} onClick={() => handleTaskClick(task)}>
+                <div key={`${task.id}-${i}`} className="task-block" style={{ gridRow: `${gridRowStart} / span ${rowSpan}` }} onClick={() => handleTaskClick(task)}>
                   <div className="schedule-task">
                     {task.task}
                   </div>

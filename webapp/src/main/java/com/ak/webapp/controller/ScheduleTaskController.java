@@ -51,6 +51,20 @@ public class ScheduleTaskController {
         return ResponseEntity.ok(tasks);
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<ScheduleTask> updateTask(@PathVariable Long id, @RequestBody String taskDescription,
+                                                   Authentication authentication) {
+        if (authentication == null || !authentication.isAuthenticated()) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        String username = userDetails.getUsername();
+
+        ScheduleTask task = scheduleTaskService.updateTask(id, username, taskDescription);
+        return ResponseEntity.ok(task);
+    }
+
+
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteTask(@PathVariable Long id, Authentication authentication) {
         if (authentication == null || !authentication.isAuthenticated()) {
