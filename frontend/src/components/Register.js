@@ -23,7 +23,11 @@ const Register = () => {
       console.log('User registered successfully', response.data);
       navigate('/login'); 
     } catch (error) {
-      setError('Registration failed. Please try again.'); 
+      if (error.response && error.response.status === 409) {
+        setError('Username already exists.');
+      } else {
+        setError('Registration failed. Please try again.');
+      }
       console.error('There was an error registering the user!', error);
     }
   };
@@ -38,7 +42,11 @@ const Register = () => {
       </div>
       <div className="register-container">
         <h2>Register</h2>
-        {error && <p className="error-message">{error}</p>} {/* Display error message */}
+        {error && (
+          <div className="custom-alert">
+            <p>{error}</p>
+          </div>
+        )}
         <form onSubmit={handleSubmit}>
           <div>
             <label>First Name</label>

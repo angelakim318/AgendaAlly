@@ -117,7 +117,19 @@
   color: #333;
 }
 
-.error-message {
-  color: red;
+.custom-alert {
+  background-color: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
+  padding: 10px;
   margin-bottom: 20px;
+  border-radius: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.custom-alert p {
+  margin: 0;
+  font-size: 14px;
 }
