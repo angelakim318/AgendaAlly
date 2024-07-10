@@ -143,6 +143,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  grid-row-end: span var(--row-span);
 }
 
 .form-control {
