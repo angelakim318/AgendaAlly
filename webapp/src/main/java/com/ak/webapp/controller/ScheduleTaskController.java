@@ -22,9 +22,9 @@ public class ScheduleTaskController {
     private ScheduleTaskService scheduleTaskService;
 
     @PostMapping("/{date}/{startTime}/{endTime}")
-    public ResponseEntity<ScheduleTask> createOrUpdateTask(@PathVariable String date, @PathVariable String startTime,
-                                                           @PathVariable String endTime, @RequestBody String taskContent,
-                                                           Authentication authentication) {
+    public ResponseEntity<String> createOrUpdateTask(@PathVariable String date, @PathVariable String startTime,
+                                                     @PathVariable String endTime, @RequestBody String taskContent,
+                                                     Authentication authentication) {
         if (authentication == null || !authentication.isAuthenticated()) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
@@ -35,8 +35,18 @@ public class ScheduleTaskController {
         LocalTime taskStartTime = LocalTime.parse(startTime);
         LocalTime taskEndTime = LocalTime.parse(endTime);
 
+        List<ScheduleTask> tasksForDate = scheduleTaskService.getTasksForDate(username, taskDate);
+
+        boolean isOverlapping = tasksForDate.stream().anyMatch(task ->
+                (taskStartTime.isBefore(task.getEndTime()) && taskEndTime.isAfter(task.getStartTime()))
+        );
+
+        if (isOverlapping) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("The task overlaps with an existing task.");
+        }
+
         ScheduleTask task = scheduleTaskService.createOrUpdateTask(username, taskDate, taskStartTime, taskEndTime, taskContent);
-        return ResponseEntity.ok(task);
+        return ResponseEntity.ok(task.toString());
     }
 
     @GetMapping("/{date}")
