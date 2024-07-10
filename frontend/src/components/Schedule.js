@@ -11,6 +11,7 @@ const Schedule = ({ user }) => {
   const [tasks, setTasks] = useState([]);
   const [newTask, setNewTask] = useState({ startTime: '', endTime: '', description: '' });
   const [selectedTask, setSelectedTask] = useState(null);
+  const [alertMessage, setAlertMessage] = useState('');
   const navigate = useNavigate();
 
   const fetchTasks = useCallback(async () => {
@@ -42,7 +43,7 @@ const Schedule = ({ user }) => {
     });
   
     if (isOverlapping) {
-      alert('The task overlaps with an existing task.');
+      setAlertMessage('The task overlaps with an existing task.');
       return;
     }
   
@@ -63,7 +64,7 @@ const Schedule = ({ user }) => {
       setNewTask({ startTime: '', endTime: '', description: '' });
     } catch (error) {
       if (error.response && error.response.status === 409) {
-        alert('The task overlaps with an existing task.');
+        setAlertMessage('The task overlaps with an existing task.');
       } else {
         console.error('Error adding schedule task', error);
       }
@@ -203,6 +204,17 @@ const Schedule = ({ user }) => {
             </div>
           </>
         )}
+      </Modal>
+      <Modal
+        isOpen={!!alertMessage}
+        onRequestClose={() => setAlertMessage('')}
+        className="custom-alert-modal-content"
+        overlayClassName="custom-alert-modal-overlay"
+      >
+        <div className="custom-alert-modal-body">
+          <p>{alertMessage}</p>
+          <button onClick={() => setAlertMessage('')} className="btn-primary">Close</button>
+        </div>
       </Modal>
     </div>
   );
