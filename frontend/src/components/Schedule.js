@@ -169,11 +169,11 @@ const Schedule = ({ user }) => {
           <input
             type="text"
             className="form-control"
-            placeholder="Task Description"
+            placeholder="Description"
             value={newTask.description}
             onChange={(e) => handleTaskChange('description', e.target.value)}
           />
-          <button className="btn btn-primary" onClick={handleAddTask}>Add Task</button>
+          <button className="btn btn-primary" onClick={handleAddTask}>Add</button>
         </div>
         <div className="task-list">
           {tasks.map((task) => (
@@ -192,7 +192,7 @@ const Schedule = ({ user }) => {
       >
         {selectedTask && (
           <>
-            <h2>Task from {formatTime(selectedTask.startTime)} to {formatTime(selectedTask.endTime)}</h2>
+            <h2>{formatTime(selectedTask.startTime)} to {formatTime(selectedTask.endTime)}</h2>
             <textarea
               value={selectedTask.task}
               onChange={(e) => setSelectedTask({ ...selectedTask, task: e.target.value })}
