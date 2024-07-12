@@ -85,7 +85,7 @@
 }
 
 .instruction-text {
-  font-size: 16px;
+  font-size: 18px;
   text-align: center;
   margin-top: 0;
   margin-bottom: 10px;
@@ -140,7 +140,7 @@
   justify-content: space-between;
   padding: 10px;
   border: 1px solid #2abe6a;
-  background-color: #ddf3e6;
+  background-color: #e3f3ea;
   cursor: pointer;
 }
 
