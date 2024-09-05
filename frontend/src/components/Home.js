@@ -13,7 +13,7 @@ const Home = ({ user }) => {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const response = await axios.get('http://localhost:8080/api/auth/user', {
+        const response = await axios.get('http://backend:8080/api/auth/user', { // Change localhost to backend when deploying using ec2
           withCredentials: true
         });
         setFirstName(capitalizeFirstLetter(response.data.firstName));
@@ -31,7 +31,7 @@ const Home = ({ user }) => {
 
   const handleLogout = async () => {
     try {
-      await axios.post('http://localhost:8080/api/auth/logout', {}, {
+      await axios.post('http://backend:8080/api/auth/logout', {}, { // Change localhost to backend when deploying using ec2
         withCredentials: true
       });
       navigate('/');

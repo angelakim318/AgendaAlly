@@ -15,14 +15,14 @@ const Login = ({ setUser }) => {
       payload.append('username', username);
       payload.append('password', password);
 
-      await axios.post('http://localhost:8080/login', payload, {
+      await axios.post('http://backend:8080/login', payload, { // Change localhost to backend when deploying using ec2
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded'
         },
         withCredentials: true
       });
 
-      const userResponse = await axios.get('http://localhost:8080/api/auth/user', {
+      const userResponse = await axios.get('http://backend:8080/api/auth/user', { // Change localhost to backend when deploying using ec2
         withCredentials: true
       });
 
