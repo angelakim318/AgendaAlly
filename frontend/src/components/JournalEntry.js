@@ -48,7 +48,7 @@ const JournalEntry = ({ user }) => {
   useEffect(() => {
     const fetchEntry = async () => {
       try {
-        const response = await axios.get(`http://localhost:8080/api/journal/${date}`, { withCredentials: true });
+        const response = await axios.get(`http://backend:8080/api/journal/${date}`, { withCredentials: true }); // Change localhost to backend when deploying using ec2
         if (response.data.content) {
           const contentState = stateFromHTML(response.data.content);
           setEditorState(EditorState.createWithContent(contentState));
@@ -86,7 +86,7 @@ const JournalEntry = ({ user }) => {
     try {
       const currentContent = stateToHTML(editorState.getCurrentContent()).trim();
       const payload = { content: currentContent };
-      const response = await axios.post(`http://localhost:8080/api/journal/${date}`, payload, { withCredentials: true });
+      const response = await axios.post(`http://backend:8080/api/journal/${date}`, payload, { withCredentials: true }); // Change localhost to backend when deploying using ec2
       setId(response.data.id);
       setOriginalContent(currentContent);
       setIsSaveDisabled(true);
@@ -99,7 +99,7 @@ const JournalEntry = ({ user }) => {
   const handleDelete = async () => {
     try {
       if (id) {
-        await axios.delete(`http://localhost:8080/api/journal/${id}`, { withCredentials: true });
+        await axios.delete(`http://backend:8080/api/journal/${id}`, { withCredentials: true }); // Change localhost to backend when deploying using ec2
         setEditorState(EditorState.createEmpty());
         setId(null);
         setOriginalContent('');
@@ -114,7 +114,7 @@ const JournalEntry = ({ user }) => {
   const formattedDate = new Date(date + 'T00:00:00').toLocaleDateString('en-US', {
     weekday: 'long',
     year: 'numeric',
-    month: 'long', // Changed from 'short' to 'long' to get the full month name
+    month: 'long',
     day: 'numeric'
   });
 
