@@ -14,7 +14,7 @@ const Register = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://backend:8080/api/auth/register', { // Change localhost to backend when deploying using ec2
+      const response = await axios.post('http://18.235.3.139:8080/api/auth/register', { // Change localhost to 18.235.3.139 when deploying using ec2
         firstName,
         lastName,
         username,
