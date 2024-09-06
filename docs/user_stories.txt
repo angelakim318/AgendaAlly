@@ -1,0 +1,29 @@
+User Stories
+User Registration
+As a new user, I want to register an account, so that I can log in and use the application.
+User Login
+As a registered user, I want to log in to my account, so that I can access my personal data in the application.
+View Calendar
+As a logged-in user, I want to see a calendar with the current month displayed, so that I can view my journal entries and tasks for each day.
+Add Journal Entry
+As a user, I want to add a journal entry for a specific day, so that I can record my thoughts for that day.
+Modify Journal Entry
+As a user, I want to modify a journal entry, so that I can change or add more information to a previous entry.
+Delete Journal Entry
+As a user, I want to delete a journal entry, so that I can remove unnecessary or incorrect entries.
+Add Task
+As a user, I want to add a task to my schedule for a specific day and time, so that I can plan out my day.
+Modify Task
+As a user, I want to modify a task, so that I can adjust my plans for the day.
+Delete Task
+As a user, I want to delete a task, so that I can remove unwanted or outdated tasks.
+User Logout
+As a user, I want to log out of my account, so that my data remains secure when I exit the application. 
+
+Requirements
+The system must allow users to register an account and log in with authentication.
+Users must be able to add, modify, delete journal entries for specific dates.
+Users must be able to add, modify, delete tasks for specific dates and times.
+The system should prevent overlapping tasks on the same day for a user.
+Only authenticated users should be able to access the system.
+
