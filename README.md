@@ -19,4 +19,4 @@ The app is built using Java, Spring Boot, React, and MySQL. It is fully containe
 - AWS EC2
 
 **Live Demo**  
-You can access the deployed application here: [link](AgendaAlly)
+You can access the deployed application [here](link)
