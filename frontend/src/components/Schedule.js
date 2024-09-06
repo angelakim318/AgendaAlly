@@ -16,7 +16,7 @@ const Schedule = ({ user }) => {
 
   const fetchTasks = useCallback(async () => {
     try {
-      const response = await axios.get(`http://backend:8080/api/schedule/${date}`, { withCredentials: true }); // Change localhost to backend when deploying using ec2
+      const response = await axios.get(`http://18.235.3.139:8080/api/schedule/${date}`, { withCredentials: true }); // Change localhost to 18.235.3.139 when deploying using ec2
       setTasks(response.data.sort((a, b) => (a.startTime > b.startTime ? 1 : -1))); // Sort tasks by startTime
       console.log('Fetched tasks:', response.data);
     } catch (error) {
@@ -49,7 +49,7 @@ const Schedule = ({ user }) => {
   
     try {
       const response = await axios.post(
-        `http://backend:8080/api/schedule/${date}/${newTask.startTime}/${newTask.endTime}`, // Change localhost to backend when deploying using ec2
+        `http://18.235.3.139:8080/api/schedule/${date}/${newTask.startTime}/${newTask.endTime}`, // Change localhost to 18.235.3.139 when deploying using ec2
         newTask.description,
         {
           headers: {
@@ -78,7 +78,7 @@ const Schedule = ({ user }) => {
   const handleSave = async () => {
     try {
       const response = await axios.put(
-        `http://backend:8080/api/schedule/${selectedTask.id}`, // Change localhost to backend when deploying using ec2
+        `http://18.235.3.139:8080/api/schedule/${selectedTask.id}`, // Change localhost to 18.235.3.139 when deploying using ec2
         { description: selectedTask.task }, 
         {
           headers: {
@@ -98,7 +98,7 @@ const Schedule = ({ user }) => {
   const handleDelete = async () => {
     try {
       const response = await axios.delete(
-        `http://backend:8080/api/schedule/${selectedTask.id}`, // Change localhost to backend when deploying using ec2
+        `http://18.235.3.139:8080/api/schedule/${selectedTask.id}`, // Change localhost to 18.235.3.139 when deploying using ec2
         {
           withCredentials: true
         }

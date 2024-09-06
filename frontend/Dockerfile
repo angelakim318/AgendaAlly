@@ -1,5 +1,5 @@
 # Stage 1: Build the React app
-FROM node:16 AS build
+FROM node:18 AS build
 
 # Set the working directory inside the container
 WORKDIR /app
@@ -13,8 +13,8 @@ RUN npm install
 # Copy the rest of the application code to the working directory
 COPY . .
 
-# Build the React application
-RUN npm run build
+# Build the React application with the legacy OpenSSL provider
+RUN NODE_OPTIONS=--openssl-legacy-provider npm run build
 
 # Stage 2: Serve the React app
 FROM nginx:alpine
