@@ -6,6 +6,8 @@ services:
       - "80:80"
     environment:
       - NODE_ENV=production
+    env_file:
+      - ./frontend/.env # Ensures the frontend uses its .env file with REACT_APP_API_URL
 
   backend:
     build: ./webapp
@@ -19,6 +21,8 @@ services:
     depends_on:
       db:
         condition: service_healthy
+    env_file:
+      - ./.env # References the root .env for the backend
 
   db:
     image: mysql:8.0

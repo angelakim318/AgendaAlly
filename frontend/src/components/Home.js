@@ -13,7 +13,7 @@ const Home = ({ user }) => {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const response = await axios.get('http://18.235.3.139:8080/api/auth/user', { // Change localhost to 18.235.3.139 when deploying using ec2
+        const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/auth/user`, {
           withCredentials: true
         });
         setFirstName(capitalizeFirstLetter(response.data.firstName));
@@ -31,7 +31,7 @@ const Home = ({ user }) => {
 
   const handleLogout = async () => {
     try {
-      await axios.post('http://18.235.3.139:8080/api/auth/logout', {}, { // Change localhost to 18.235.3.139 when deploying using ec2
+      await axios.post(`${process.env.REACT_APP_API_URL}/api/auth/logout`, {}, {
         withCredentials: true
       });
       navigate('/');

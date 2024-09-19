@@ -48,7 +48,7 @@ const JournalEntry = ({ user }) => {
   useEffect(() => {
     const fetchEntry = async () => {
       try {
-        const response = await axios.get(`http://18.235.3.139:8080/api/journal/${date}`, { withCredentials: true }); // Change localhost to 18.235.3.139 when deploying using ec2
+        const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/journal/${date}`, { withCredentials: true });
         if (response.data.content) {
           const contentState = stateFromHTML(response.data.content);
           setEditorState(EditorState.createWithContent(contentState));
@@ -86,7 +86,7 @@ const JournalEntry = ({ user }) => {
     try {
       const currentContent = stateToHTML(editorState.getCurrentContent()).trim();
       const payload = { content: currentContent };
-      const response = await axios.post(`http://18.235.3.139:8080/api/journal/${date}`, payload, { withCredentials: true }); // Change localhost to 18.235.3.139 when deploying using ec2
+      const response = await axios.post(`${process.env.REACT_APP_API_URL}/api/journal/${date}`, payload, { withCredentials: true });
       setId(response.data.id);
       setOriginalContent(currentContent);
       setIsSaveDisabled(true);
@@ -99,7 +99,7 @@ const JournalEntry = ({ user }) => {
   const handleDelete = async () => {
     try {
       if (id) {
-        await axios.delete(`http://18.235.3.139:8080/api/journal/${id}`, { withCredentials: true }); // Change localhost to 18.235.3.139 when deploying using ec2
+        await axios.delete(`${process.env.REACT_APP_API_URL}/api/journal/${id}`, { withCredentials: true });
         setEditorState(EditorState.createEmpty());
         setId(null);
         setOriginalContent('');

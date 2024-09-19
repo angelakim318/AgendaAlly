@@ -15,14 +15,14 @@ const Login = ({ setUser }) => {
       payload.append('username', username);
       payload.append('password', password);
 
-      await axios.post('http://18.235.3.139:8080/login', payload, { // Change localhost to 18.235.3.139 when deploying using ec2
+      await axios.post(`${process.env.REACT_APP_API_URL}/login`, payload, {
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded'
         },
         withCredentials: true
       });
 
-      const userResponse = await axios.get('http://18.235.3.139:8080/api/auth/user', { // Change localhost to 18.235.3.139 when deploying using ec2
+      const userResponse = await axios.get(`${process.env.REACT_APP_API_URL}/api/auth/user`, {
         withCredentials: true
       });
 
